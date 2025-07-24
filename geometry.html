@@ -101,6 +101,41 @@
             background: #333;
             color: #f4f4f4;
         }
+
+nav {
+    display: flex; /* Užtikrina, kad nav visada būtų flex konteineris */
+    justify-content: center; /* Centruoja ul elementą nav viduje */
+    background: #3700b3;
+    padding: 15px;
+    transition: background 0.3s;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Visada rodomas kaip flex */
+    flex-direction: column; /* Pagal nutylėjimą vertikaliai (telefono stačia padėtis) */
+    width: 100%; /* Užima visą plotį */
+    align-items: center; /* Centruoja meniu punktus stulpelyje */
+}
+
+nav ul li {
+    margin: 5px 0; /* Vertikalus tarpas tarp meniu punktų */
+}
+
+/* Nustatome horizontalią padėtį platesniems ekranams (telefono gulsčia padėtis, planšetė, kompiuteris) */
+@media (min-width: 576px) {
+    nav ul {
+        flex-direction: row; /* Horizontaliai platesniuose ekranuose */
+        width: auto; /* Leidžiame elementams užimti tik reikiamą plotį */
+    }
+
+    nav ul li {
+        margin: 0 15px; /* Grąžiname horizontalų tarpą tarp meniu punktų */
+    }
+}
+        
         h2.main {
             text-align: center;
         }
