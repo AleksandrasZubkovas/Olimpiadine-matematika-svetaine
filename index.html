@@ -6,7 +6,7 @@
     <title>Olimpiadinė matematika</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Existing styles */
+        
         h2 {
             margin: auto;
             text-align: center;
@@ -124,27 +124,40 @@
         .topic-section {
             margin-top: 40px;
         }
-        .menu-icon {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: white;
-            padding: 10px;
-        }
 
-        @media (max-width: 768px) {
-            .menu-icon {
-                display: block;
-            }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-            }
-            nav ul.active {
-                display: flex;
-            }
-        }
+        nav {
+    display: flex; /* Užtikrina, kad nav visada būtų flex konteineris */
+    justify-content: center; /* Centruoja ul elementą nav viduje */
+    background: #3700b3;
+    padding: 15px;
+    transition: background 0.3s;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Visada rodomas kaip flex */
+    flex-direction: column; /* Pagal nutylėjimą vertikaliai (telefono stačia padėtis) */
+    width: 100%; /* Užima visą plotį */
+    align-items: center; /* Centruoja meniu punktus stulpelyje */
+}
+
+nav ul li {
+    margin: 5px 0; /* Vertikalus tarpas tarp meniu punktų */
+}
+
+/* Nustatome horizontalią padėtį platesniems ekranams (telefono gulsčia padėtis, planšetė, kompiuteris) */
+@media (min-width: 576px) {
+    nav ul {
+        flex-direction: row; /* Horizontaliai platesniuose ekranuose */
+        width: auto; /* Leidžiame elementams užimti tik reikiamą plotį */
+    }
+
+    nav ul li {
+        margin: 0 15px; /* Grąžiname horizontalų tarpą tarp meniu punktų */
+    }
+}
 
         .hero {
             background: url('https://via.placeholder.com/1200x400?text=Math+Background') no-repeat center center/cover;
@@ -390,14 +403,6 @@
             localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
             themeToggle.textContent = isDarkMode ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
         }); 
-
-        // Meniu
-        const menuIcon = document.getElementById('menu-icon');
-        const navList = document.getElementById('nav-list');
-
-        menuIcon.addEventListener('click', () => {
-            navList.classList.toggle('active');
-        });
 
         // Atgal i virsu
         const backToTopButton = document.getElementById('back-to-top');
