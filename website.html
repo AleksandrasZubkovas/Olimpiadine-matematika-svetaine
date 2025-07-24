@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympiad Math Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Existing styles */
+        h2 {
+            margin: auto;
+            text-align: center;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            transition: background 0.3s;
+        }
+        .dark-mode header {
+            background: #3700b3;
+        }
+        #theme-toggle {
+            background: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+        .dark-mode #theme-toggle {
+            background: #333;
+            color: white;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+            transition: background 0.3s;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: background 0.3s, color 0.1s;
+        }
+        .dark-mode main {
+            background: #1e1e1e;
+            color: #f4f4f4;
+        }
+        .topic-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, color 0.1s;
+        }
+        .dark-mode .topic-card {
+            background: #333;
+            color: #f4f4f4;
+        }
+        .topic-card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .topic-card h3 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 25px;
+            line-height: normal;
+        }
+        .h2 {
+            margin-top: 1px;
+            margin-bottom: 5px;
+            font-size: 25px;
+            line-height: normal;
+        }
+        .topic-card p {
+            font-size: 1.1em;
+        }
+        /* Style for individual topic sections */
+        .topic-section {
+            margin-top: 40px;
+        }
+
+        /* New styles */
+        .menu-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            nav ul.active {
+                display: flex;
+            }
+        }
+
+        .hero {
+            background: url('https://via.placeholder.com/1200x400?text=Math+Background') no-repeat center center/cover;
+            color: black;
+            padding: 10px 15px;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dark-mode .hero {
+            color: white; /* I balta spalva tamsiam rezime */
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 0;
+        }
+
+        .cta-button {
+            background: #6200ea;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #3700b3;
+        }
+
+        footer {
+            background: #6200ea;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            transition: background 0.3s;
+        }
+
+        .dark-mode footer {
+            background: #3700b3;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        #back-to-top:hover {
+            background: #3700b3;
+        }
+
+        /* Style for the content and image inside each topic card */
+        .topic-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .text-content{
+            flex: 1;
+            margin-right: 20px; /* Adds space between text and image */
+        }
+
+        .image-content {
+            flex-shrink: 0;
+            max-width: 40%; /* Adjust this to control how much space the image occupies */
+        }
+
+        .topic-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Olimpiadinė matematika</h1>
+        <button id="theme-toggle">🌙 Tamsus režimas</button>
+    </header>
+
+    <nav>
+        <div class="menu-icon" id="menu-icon">&#9776;</div>
+        <ul id="nav-list">
+            <li><a href="website.html">Pagrindinis</a></li>
+            <li><a href="algebra.html">Algebra</a></li>
+            <li><a href="number_theory.html">Skaičių teorija</a></li>
+            <li><a href="geometry.html">Geometrija</a></li>
+            <li><a href="combinatorics.html">Kombinatorika</a></li>
+            <li><a href="forum.html">Forumas</a></li>
+        </ul>
+    </nav>
+    <main>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Kodėl verta mokytis matematiką?</h2>
+            <p>Matematika – tai daugiau nei tik skaičiai ar formulės. Tai mąstymo įrankis, ugdantis gebėjimą analizuoti, pagrįsti ir kūrybiškai spręsti problemas. Ji slypi kasdienybėje – nuo technologijų ir ekonomikos iki gamtos reiškinių ir logiškų sprendimų priėmimo. Mokydamiesi matematikos mes ne tik laviname protą, bet ir atrandame būdą geriau suprasti mus supantį pasaulį.</p>
+            <br>
+            <!--<a href="#algebra1" class="cta-button">Apie sritis</a>-->
+            
+        </div>
+    </section>
+</main>
+    <main>
+        <h1> <center>Pagrindinės matematikos temos</center></h1>
+        <p> <center>Pristatymas, teorija ir pritaikymas realiame gyvenime</center></p>
+        <!--Algebryte-->
+        <div class="topic-section" id="algebra">
+            <div class="topic-card">
+                <h3>Algebra</h3>
+                <div class="topic-content">
+                    <div class="text-content">
+                <p>Matematikos šaka, tirianti veiksmų su įvairiais dydžiais (reiškiamais raidėmis) bendrąsias savybes, nepriklausomas nuo tų dydžių kilmės. Algebra yra viena seniausių matematikos šakų, atsiradusi senovės Rytų civilizacijose, kur buvo ieškoma apibendrintų metodų panašiems uždaviniams spręsti.</p>
+                <p>Algebroje sprendžiami dydžių sistemose kylantys uždaviniai, kai dydžių sistemos klasifikuojamos pagal veiksmų savybes. Skirtingai nei matematinėje analizėje ar funkcijų teorijoje, algebroje nėra ribos sąvokos.</p>
+                    </div>
+                <div class="image-content">
+                <img src="https://www.kcrw.com/news/shows/press-play-with-madeleine-brand/house-politics-edu-film-alaska/ca-math/@@images/rectangular_image/page-header?v=1696880822.35" alt="Algebra">
+            </div>
+            </div>
+            </div>
+        </div>
+
+        <!--Skaiciu teorijaaaa-->
+        <div class="topic-section" id="number-theory">
+            <div class="topic-card">
+                <h3>Skaičių teorija</h3>
+                <div class="topic-content">
+                    <div class="text-content">
+                <p>Matematikos šaka, tirianti sveikųjų skaičių savybes. Dauguma skaičių teorijos iškeltų problemų yra suformuluotos paprastai, tačiau kai kurių sprendimas ypatingai sudėtingas.</p>
+                <p>Skaičių teoriją studijavę matematikai Leonardas Oileris, Karlas Frydrichas Gausas ir Bernardas Rymanas yra laikomi vieni iškiliausių istorijoje. Už indėlį į skaičių teoriją yra skiriami aukščiausi matematikos apdovanojimai, tokie kaip Fildso medalis, Abelio premija ir Koplio medalis.</p>
+                    </div>
+                <div class="image-content">
+                <img src="https://miro.medium.com/v2/resize:fit:899/1*DRIJubx-njlrGGN0_qsrWg.png" alt="Skaičių teorija">
+            </div>
+            </div>
+            </div>
+        </div>
+
+        <!--Geometrija achhh-->
+        <div class="topic-section" id="geometry">
+            <div class="topic-card">
+                <h3>Geometrija</h3>
+                <div class="topic-content">
+                    <div class="text-content">
+                <p>Matematikos dalis, tirianti erdvinius ryšius. Dėl praktinio panaudojimo, geometrija buvo viena pirmųjų matematikos šakų.
+
+                    Intuityviai ar iš patirties žmonės apibūdina erdvę tam tikromis bazinėmis savybėmis, vadinamomis aksiomomis. Aksiomos ne įrodomos, bet naudojamos kartu su matematiniais taško, tiesės, kreivės, plokštumos ir paviršiaus apibrėžimais loginėms išvadoms gauti.</p>
+                <p>Pirmasis geometrijos aksiomatiką apibrėžė graikų matematikas Euklidas. Praėjus tūkstantmečiui, atsirado analizinė geometrija, kur įvesta koordinačių sistema, o taškai vaizduojami kaip skaičių pora ar trejetas. Galimos ir kitos geometrijos aksiomatikos, kuriose pradinės figūros gali būti nebūtinai taškas ir tiesė, o, pvz., vektorius.
+
+                    Geometrija yra taikoma daugelyje sričių, pvz., mene, architektūroje, fizikoje ir kitose matematikos srityse.</p>
+                    </div>
+                <div class="image-content">
+                <img src="https://figures.semanticscholar.org/51944312372d15c363976b64689a208256a63cde/59-Figure3.3-1.png" alt="Geometrija">
+            </div>
+            </div>
+            </div>
+        </div>
+
+        <!--Kombinatorika achhhh-->
+        <div class="topic-section" id="combinatorics">
+            <div class="topic-card">
+                <h3>Kombinatorika</h3>
+                <div class="topic-content">
+                    <div class="text-content">
+                <p>Tai matematikos šaka, nagrinėjanti, kaip rasti tam tikrų baigtinių aibių elementų kiekį. Kombinatoriniai uždaviniai yra matematikos tikslas ir priemonė sprendžiant kitų matematikos ir mokslo sričių (statistinės fizikos, tikimybių teorijos, skaičių teorijos, teorinio kompiuterių mokslo) uždavinius.</p>
+                <p>Kombinatorika labai dažnai taikoma praktinių uždavinių sprendimui. Jos metodai taikomi sprendžiant statistikos, valdymo sistemų uždavinius. Kombinatorinės struktūros (pvz., grafai, medžiai) yra svarbūs modeliai taikomojo mokslo srityse kaip biologija, kompiuterių mokslas, ir sociologija.</p>
+                    </div>
+                <div class="image-content">
+                <img src="https://media.istockphoto.com/id/1074825946/photo/number-of-combinations.jpg?s=612x612&w=0&k=20&c=nekZB6QHZfb-0BQz_i-RSeTBTBCfXpwAclq7AJKsmu8=" alt="Kombinatorika">
+            </div>
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Olimpiadinė matematika </p>
+        <p> Aleksandras Zubkovas </p>
+        <!-- <p><a href="privacy.html">Privatumo politika</a> | <a href="terms.html">Naudojimosi taisyklės</a></p> -->
+    </footer>
+
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <script>
+        // I virsu parelodinus
+        /* window.onload = () => {
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+}; 
+*/
+        // Tamsos rezimo ijungimas
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Prisimena, koki palikai rezima
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            themeToggle.textContent = savedTheme === 'dark-mode' ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
+            themeToggle.textContent = isDarkMode ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        }); 
+
+        // Meniu
+        const menuIcon = document.getElementById('menu-icon');
+        const navList = document.getElementById('nav-list');
+
+        menuIcon.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Atgal i virsu
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

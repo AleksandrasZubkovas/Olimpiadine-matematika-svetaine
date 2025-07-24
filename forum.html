@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Keep your existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .dark-mode header {
+            background: #3700b3;
+        }
+        #theme-toggle {
+            background: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+        .dark-mode #theme-toggle {
+            background: #333;
+            color: white;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+            transition: background 0.3s;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .dark-mode main {
+            background: #1e1e1e;
+            color: #f4f4f4;
+        }
+        .content-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .dark-mode .content-box {
+            background: #333;
+            color: #f4f4f4;
+        }
+        h2.main {
+            text-align: center;
+        }
+        h1.main {
+            text-align: center;
+            color: black;
+            font-size: 60px;
+        }
+        
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        /* Add these new styles for better layout */
+        .example-box {
+            background-color: #f0f8ff; /* A lighter background for examples */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .problem-set {
+            margin-top: 20px;
+        }
+        .problem {
+            margin-bottom: 10px;
+        }
+        details {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .dark-mode details {
+            background-color: #222;
+        }
+
+        .dark-mode .example-box,
+        .dark-mode .problem,
+        .dark-mode .problem-set {
+            background-color: #222;
+            color: #f4f4f4;
+        }
+
+        .dark-mode a {
+        color: #90caf9; /* šviesiai mėlyna */
+        }
+        .dark-mode a:hover {
+            color: #bbdefb; /* dar šviesesnė mėlyna per hover */
+        }
+
+        .toc {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding-left: 0;
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .toc li a {
+            display: block;
+            padding: 8px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .toc li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Tamsus režimas */
+        .dark-mode .toc li a {
+            background-color: #2a2a2a;
+            color: #f4f4f4;
+        }
+
+        .dark-mode .toc li a:hover {
+            background-color: #444;
+        }
+
+        .dark-mode nav a {
+        color: white;
+        }
+        .dark-mode nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Pagrindinis fonas ir tekstas */
+        body, main, header, nav, .content-box, .example-box, details, #theme-toggle {
+    transition: background-color 0.3s ease;
+}
+
+a {
+    transition: color 0.3s ease;
+}
+
+
+/* Turinys (TOC) */
+.toc li a {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Mygtukas „į viršų“ */
+#back-to-top {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode nav a:hover {
+    color: white; /* išlaikyti baltą spalvą per hover */
+}
+
+
+
+
+        #back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        #back-to-top:hover {
+            background: #3700b3;
+        }
+
+        /* Forumo puslapio specifiniai stiliai */
+.discord-invitation {
+    text-align: center;
+    font-size: 1.1em;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.discord-button-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.discord-button {
+    display: inline-flex; /* Leidžia logotipui ir tekstui būti vienoje eilutėje */
+    align-items: center; /* Centruoja vertikaliai */
+    background-color: #7289DA; /* Discord mėlyna spalva */
+    color: white !important;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.discord-button:hover {
+    background-color: #677BC4; /* Šiek tiek tamsesnė mėlyna užvedus pele */
+    transform: translateY(-2px); /* Mažas pakilimo efektas */
+}
+
+.discord-logo {
+    width: 28px; /* Logotipo dydis */
+    height: 28px;
+    margin-right: 10px; /* Tarpas tarp logotipo ir teksto */
+}
+
+/* Bendri stiliai, jei dar neturite */
+main.content-section {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.dark-mode main.content-section {
+    background-color: #1e1e1e;
+    color: #f4f4f4;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+main.content-section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.dark-mode main.content-section h2 {
+    color: white;
+}
+
+main.content-section ul,
+main.content-section ol {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+main.content-section li {
+    margin-bottom: 8px;
+}
+
+    </style>
+
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+    <header>
+        <h1>Forumas</h1>
+        <button id="theme-toggle">🌙 Tamsus režimas</button>
+    </header>
+    <nav>
+        <ul id="nav-list">
+            <li><a href="website.html">Pagrindinis</a></li>
+            <li><a href="algebra.html">Algebra</a></li>
+            <li><a href="number_theory.html">Skaičių teorija</a></li>
+            <li><a href="geometry.html">Geometrija</a></li>
+            <li><a href="combinatorics.html">Kombinatorika</a></li>
+            <li><a href="forum.html">Forumas</a></li>
+        </ul>
+    </nav>
+    
+    <main class="content-section">
+        <h2>Prisijunkite prie Discord bendruomenės</h2>
+        <p>Interaktyvios ir realiame laike vykstančios diskusijos yra efektyviausias būdas mokytis ir tobulėti. Todėl tikrai verta prisijungti prie olimpiadinės matematikos serverio, kuriame yra virš 100 dalyvių, taip pat besidominčių olimpiadine matematika. Ten galėsite:</p>
+        <ul>
+            <li>Užduoti klausimus ir gauti pagalbą sprendžiant matematikos uždavinius.</li>
+            <li>Aptarti sudėtingas temas.</li>
+            <li>Dalintis patarimais ir strategijomis.</li>
+            <li>Bendrauti su kitais entuziastais ir olimpiadininkais.</li>
+            <li>Dalyvauti diskusijose ir išmokti naujų dalykų!</li>
+        </ul>
+
+        <p class="discord-invitation">Paspauskite žemiau esantį mygtuką, kad prisijungtumėte prie olimpiadinės matematikos Discord serverio:</p>
+        
+        <div class="discord-button-container">
+            <a href="JŪSŲ_DISCORD_KVIETIMO_NUORODA" target="_blank" rel="noopener noreferrer" class="discord-button">
+                <img src="discord_logo.webp" alt="Discord logotipas" class="discord-logo">
+                Prisijungti prie Discord serverio
+            </a>
+        </div>
+
+        <h3>Kas yra Discord ir kaip prisijungti?</h3>
+        <p>Discord yra nemokama balso, vaizdo ir teksto pokalbių programa, kurią naudoja milijonai žmonių ir bendruomenių visame pasaulyje. Ji puikiai tinka mokymuisi ir bendravimui realiuoju laiku.</p>
+        <ol>
+            <li>Spustelėkite "Prisijungti prie Discord serverio" mygtuką aukščiau.</li>
+            <li>Jei neturite Discord paskyros, jums bus pasiūlyta ją susikurti (tai užtruks vos kelias minutes).</li>
+            <li>Patvirtinus el. paštą, būsite nukreipti tiesiai į serverį.</li>
+            <li>Mėgaukitės diskusijomis ir mokykitės.</li>
+        </ol>
+
+        <h3>Serverio taisyklės</h3>
+        <p>Siekiame palaikyti pozityvią ir produktyvią aplinką visiems nariams. Prašome susipažinti serverio taisyklėmis (jas rasite kanale #taisyklės prisijungę) ir jų laikytis. Svarbiausia – pagarba vieni kitiems ir noras padėti. Užduoti norimus klausimus, diskutuoti ar padėti kitiems (su temomis, susijusiomis su matematika) galite kanaluose #matematikos-diskusija ir #uždavinių-aptarimai. </p>
+
+    </main>
+
+
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <script>
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            themeToggle.textContent = savedTheme === 'dark-mode' ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
+            themeToggle.textContent = isDarkMode ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        });
+    </script>
+</body>
+</html>

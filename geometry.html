@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometrija</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Keep your existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .dark-mode header {
+            background: #3700b3;
+        }
+        #theme-toggle {
+            background: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+        .dark-mode #theme-toggle {
+            background: #333;
+            color: white;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+            transition: background 0.3s;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .dark-mode main {
+            background: #1e1e1e;
+            color: #f4f4f4;
+        }
+        .content-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .dark-mode .content-box {
+            background: #333;
+            color: #f4f4f4;
+        }
+        h2.main {
+            text-align: center;
+        }
+        h1.main {
+            text-align: center;
+            color: black;
+            font-size: 60px;
+        }
+        
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        /* Add these new styles for better layout */
+        .example-box {
+            background-color: #f0f8ff; /* A lighter background for examples */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .problem-set {
+            margin-top: 20px;
+        }
+        .problem {
+            margin-bottom: 10px;
+        }
+        details {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .dark-mode details {
+            background-color: #222;
+        }
+
+        .dark-mode .example-box,
+        .dark-mode .problem,
+        .dark-mode .problem-set {
+            background-color: #222;
+            color: #f4f4f4;
+        }
+
+        .dark-mode a {
+        color: #90caf9; /* šviesiai mėlyna */
+        }
+        .dark-mode a:hover {
+            color: #bbdefb; /* dar šviesesnė mėlyna per hover */
+        }
+
+        .toc {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding-left: 0;
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .toc li a {
+            display: block;
+            padding: 8px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .toc li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Tamsus režimas */
+        .dark-mode .toc li a {
+            background-color: #2a2a2a;
+            color: #f4f4f4;
+        }
+
+        .dark-mode .toc li a:hover {
+            background-color: #444;
+        }
+
+        .dark-mode nav a {
+        color: white;
+        }
+        .dark-mode nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Pagrindinis fonas ir tekstas */
+        body, main, header, nav, .content-box, .example-box, details, #theme-toggle {
+    transition: background-color 0.3s ease;
+}
+
+a {
+    transition: color 0.3s ease;
+}
+
+
+/* Turinys (TOC) */
+.toc li a {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Mygtukas „į viršų“ */
+#back-to-top {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode nav a:hover {
+    color: white; /* išlaikyti baltą spalvą per hover */
+}
+
+
+
+
+        #back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        #back-to-top:hover {
+            background: #3700b3;
+        }
+    </style>
+
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+    <header>
+        <h1>Geometrija</h1>
+        <button id="theme-toggle">🌙 Tamsus režimas</button>
+    </header>
+    <nav>
+        <ul id="nav-list">
+            <li><a href="website.html">Pagrindinis</a></li>
+            <li><a href="algebra.html">Algebra</a></li>
+            <li><a href="number_theory.html">Skaičių teorija</a></li>
+            <li><a href="geometry.html">Geometrija</a></li>
+            <li><a href="combinatorics.html">Kombinatorika</a></li>
+            <li><a href="forum.html">Forumas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="content-box">
+            <h1>Įvadas į geometriją</h1>
+            <p>
+                <center>Sintetinė (arba aksiomatinė) geometrija – tai elegantiška matematikos sritis, kuri sprendžia uždavinius, remdamasi vien tik geometrinių figūrų savybėmis, tokiomis kaip taškai, tiesės, apskritimai, kampai, atstumai bei loginiais samprotavimais. Skirtingai nuo analizinės geometrijos, čia nenaudojamos koordinatės ar sudėtingos algebrinės formulės. Olimpiadinė sintetinė geometrija reikalauja ne tik žinių, bet ir kūrybiškumo bei gebėjimo pamatyti netikėtus ryšius. </center>
+            </p>
+        </section>
+
+        <section class="content-box">
+            <h2>Turinys</h2>
+            <ul class="toc">
+                <li><a href="#diof-teorija">Trikampių teorija</a></li>
+                <li><a href="#diof-uzdaviniai">Trikampių uždaviniai</a></li>
+                <li><a href="#funkciju-teorija">Keturkampių teorija</a></li>
+                <li><a href="#funkciju-uzdaviniai">Keturkampių uždaviniai</a></li>
+                <li><a href="#papildomi-istekliai">Papildomi ištekliai</a></li>
+            </ul>
+        </section>
+
+        <section class="content-box">
+            <h1>Trikampiai</h1>
+            <h2 id="diof-teorija">Trikampiai - teorija</h2>
+            <h4>Kas yra trikampis?</h4>
+    <p>
+        Trikampis yra paprasčiausia daugiakampė figūra, tačiau jo savybės yra nepaprastai gilios ir įvairios. Jis yra esminis sintetinės geometrijos elementas, o jo savybės ir ryšiai su kitomis figūromis yra neišsemiamas olimpiadų uždavinių šaltinis. Nuo kampų ir kraštinių santykių iki ypatingųjų taškų ir tiesių – trikampiai slepia daugybę loginių iššūkių, kuriuos spręsti padeda kūrybiškumas ir pagrindinių teoremų žinojimas.
+        </p>
+
+    <h4>Trikampių rūšys ir pagrindinės savybės</h4>
+    <p>
+        Trikampiai klasifikuojami pagal kraštinių ilgius ir kampus:
+        <br>
+        <br>
+        Lygiašonis trikampis: turi dvi lygias kraštines ir joms priešingus lygius kampus.
+        <br>
+        <br>
+        Lygiakraštis trikampis: visos trys kraštinės lygios ir visi kampai lygūs $60^\circ$.
+        <br>
+        <br>
+        Statusis trikampis: turi vieną $90^\circ$ kampą. Kraštinės, sudarančios statųjį kampą, vadinamos statiniais, o priešais statųjį kampą esanti kraštinė – įžambine. Jam galioja Pitagoro teorema: statinių kvadratų suma lygi įžambinės kvadrato sumai ($a^2 + b^2 = c^2$).
+        <br>
+        <br>
+        Įvairiakraštis trikampis: visos kraštinės ir visi kampai skirtingi.
+    </p>
+
+    <h4>Ypatingosios trikampio tiesės</h4>
+    <p>
+        Trikampyje galima nubrėžti keletą ypatingųjų tiesių, kurios turi unikalių savybių ir dažnai susikerta viename taške:
+        <br>
+        <br>
+        Pusiaukraštinė: atkarpa, jungianti viršūnę su priešingos kraštinės vidurio tašku. Visos trys pusiaukraštinės susikerta viename taške, vadinamame svorio centru. Šis taškas dalija pusiaukraštines santykiu $2:1$, skaičiuojant nuo viršūnės.
+        <br>
+        <br>
+        Pusiaukampinė: atkarpa, dalijanti kampą pusiau ir jungianti viršūnę su priešinga kraštine. Visos trys pusiaukampinės susikerta viename taške, kuris yra į trikampį įbrėžtojo apskritimo centras. Pusiaukampinė dalija priešingą kraštinę į atkarpas, proporcingas kitoms dviem trikampio kraštinėms.
+        <br>
+        <br>
+        Aukštinė: atkarpa, nuleista iš viršūnės statmenai į priešingą kraštinę (arba jos tęsinį). Visos trys aukštinės (arba jų tęsiniai) susikerta viename taške, vadinamame ortocentru.
+        <br>
+        <br>
+        Kraštinės vidurio statmuo: tiesė, einanti per kraštinės vidurio tašką ir statmena jai. Visos trys kraštinių vidurio statmenų susikerta viename taške, kuris yra apie trikampį apibrėžtojo apskritimo centras.
+    </p>
+
+    <h4>Panašūs trikampiai</h4>
+    <p>
+        Du trikampiai yra panašūs, jei jų atitinkami kampai yra lygūs, o atitinkamos kraštinės yra proporcingos. Panašumas žymimas simboliu $\sim$.
+        <br>
+        <br>
+        Panašumo požymiai (dažniausiai naudojami):
+        <br>
+        <br>
+        Jei dviejų trikampių du atitinkami kampai yra lygūs, tai trikampiai yra panašūs. (Trečias kampas automatiškai bus lygus, nes visų kampų suma yra 180 laipsnių).
+        <br>
+        <br>
+        Jei dviejų trikampių dvi kraštinės yra proporcingos, o kampas tarp jų yra lygus, tai trikampiai yra panašūs.
+        <br>
+        <br>
+        Jei dviejų trikampių visos trys kraštinės yra proporcingos, tai trikampiai yra panašūs.
+        <br>
+        <br>
+        Savybės: jei trikampiai yra panašūs, jų perimetrų santykis yra lygus panašumo koeficientui, o plotų santykis lygus panašumo koeficiento kvadratui.
+    </p>
+
+    <h4>Čevos ir Menelajo teoremos</h4>
+    <p>
+        Šios dvi teoremos dažnai pasitaiko olimpiadinėje geometrijoje. Apie jas pasiskaitykite čia:
+        <br>
+        <a href="http://web.vu.lt/mif/v.stakenas/a+o/2003-1/2003-1-43-49.pdf" target="_blank">Čevos ir Menelajo teoremos (Edmundas Mazėtis, VU matematikos ir informatikos fakulteto dėstytojas, docentas, daktaras)</a>
+    </p>
+
+    <h4>Daugiau apie trikampių savybes</h4>
+    <p>
+        Visa reikalinga informacija apie trikampius (su paveikslėliais, formulėmis ir t. t.):
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Trikampis" target="_blank">Trikampiai</a>
+    </p>
+
+    <h4>Toliau apie olimpiadinę trikampių geometriją</h4>
+    <p>
+        Trikampiai būna vos ne kiekviename olimpiadiniame geometrijos uždavinyje. Daugiau apie juos pasiskaityti ir paspręsti galite matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose:
+        <br>
+        <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie trikampius (skyrelis "Panašieji trikampiai ir brėžinio papildymai" - 119 psl.)</a>
+    </p>
+
+        </section>
+        <section class="content-box">
+            <h2 id="diof-uzdaviniai">Trikampiai - uždaviniai</h2>
+            <div class="example-box">
+                <p><b>1. Duotas lygiašonis trikampis $ABC$, kuriame $AB = AC$. Jei $\angle ABC = 70^\circ$, raskite kampą $\angle BAC$.</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Kadangi trikampis $ABC$ yra lygiašonis ir $AB = AC$, kampai prieš lygias kraštines yra lygūs: $\angle ABC = \angle ACB$.
+                        <br>
+                        <br>
+                        Mums duota, kad $\angle ABC = 70^\circ$. Vadinasi, $\angle ACB = 70^\circ$.
+                        <br>
+                        <br>
+                        Trikampio vidaus kampų suma visada lygi $180^\circ$: $\angle BAC + \angle ABC + \angle ACB = 180^\circ$
+                        <br>
+                        $\angle BAC + 70^\circ + 70^\circ = 180^\circ$
+                        <br>
+                        $\angle BAC + 140^\circ = 180^\circ$
+                        <br>
+                        $\angle BAC = 180^\circ - 140^\circ$
+                        <br>
+                        $\angle BAC = 40^\circ$.
+                        <br>
+                        <br>
+                        Kampas $\angle BAC = 40^\circ$.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>2. Trikampyje $ABC$ kampas $\angle BAC = 90^\circ$. $AD$ yra aukštinė į kraštinę $BC$. Jei $BD = 4$ cm ir $CD = 9$ cm, raskite aukštinės $AD$ ilgį.</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Kadangi trikampis $ABC$ yra statusis ($\angle BAC = 90^\circ$) ir $AD$ yra aukštinė į įžambinę $BC$, galime taikyti aukštinės formulę stačiajame trikampyje.
+                        <br>
+                        <br>
+                        Ši teorema teigia, kad aukštinės, nuleistos į įžambinę, ilgis yra lygus įžambinės projekcijų ant jos sandaugai. T. y., $AD^2 = BD \cdot CD$.
+                        <br>
+                        <br>
+                        Mums duota $BD = 4$ cm ir $CD = 9$ cm. $AD^2 = 4 \cdot 9$ $AD^2 = 36$
+                        <br>
+                        <br>
+                        Ištraukiame šaknį: $AD = \sqrt{36}$ $AD = 6$ cm.
+                        <br>
+                        <br>
+                        Aukštinės $AD$ ilgis yra 6 cm.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>3. Trikampyje $ABC$ kraštinėje $BC$ yra taškas $D$. Žinoma, kad $AD$ yra kampo $\angle BAC$ pusiaukampinė. Jei $AB = 6$ cm, $AC = 9$ cm ir $BC = 10$ cm, raskite atkarpų $BD$ ir $DC$ ilgius.</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Kadangi $AD$ yra kampo $\angle BAC$ pusiaukampinė, galime taikyti pusiaukampinės teoremą.
+                        <br>
+                        <br>
+                        Pusiaukampinės teorema teigia, kad pusiaukampinė dalija priešingą kraštinę į atkarpas, proporcingas kitoms dviem trikampio kraštinėms. T. y.: $$\frac{BD}{DC} = \frac{AB}{AC}$$
+                        <br>
+                        <br>
+                        Mums duota $AB = 6$ cm ir $AC = 9$ cm. Taigi:
+                        $$\frac{BD}{DC} = \frac{6}{9} = \frac{2}{3}$$
+                        Tai reiškia, kad $BD = 2k$ ir $DC = 3k$ tam tikrai konstantai $k$.
+                        <br>
+                        <br>
+                        Žinome, kad $BD + DC = BC$. Mums duota $BC = 10$ cm.
+                        <br>
+                        $2k + 3k = 10$
+                        <br>
+                        $5k = 10$
+                        <br>
+                        $k = 2$.
+                        <br>
+                        <br>
+                        Dabar galime rasti $BD$ ir $DC$ ilgius: $BD = 2k = 2 \cdot 2 = 4$ cm. $DC = 3k = 3 \cdot 2 = 6$ cm.
+                        <br>
+                        <br>
+                        Atkarpos $BD$ ilgis yra 4 cm, o atkarpos $DC$ ilgis yra 6 cm.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>Kai kuriems (vyresniems ar turintiems kažkiek olimpiadinės patirties) šie uždaviniai galėjo pasirodyti lengvi, o teorija - jau žinoma. Sunkesnių uždavinių ir platesnės teorijos galite rasti matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose: </b>
+                    <br>
+            <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie trikampius (skyrelis "Panašieji trikampiai ir brėžinio papildymai" - 119 psl.)</a>
+            </div>
+        </section>
+        <section class="content-box">
+        <h1>Keturkampiai</h1>
+            <h2 id="funkciju-teorija">Keturkampiai - teorija</h2>
+            <h4>Kas yra keturkampis?</h4>
+    <p>
+        Keturkampiai yra daugiakampiai su keturiomis kraštinėmis ir keturiais kampais. Nors trikampiai yra geometrijos statybiniai blokai, keturkampiai suteikia didesnę įvairovę ir sudėtingumą, ypač kai jie įbrėžti į apskritimą ar apibrėžti apie jį. Olimpiadose dažnai pasitaiko uždavinių, kuriems spręsti reikia žinoti specifines keturkampių savybes ir ryšius su apskritimais.
+    </p>
+
+    <h4>Keturkampių rūšys ir pagrindinės savybės</h4>
+    <p>
+        Visų keturkampio vidaus kampų suma yra $360^\circ$. Yra keletas specialių keturkampių tipų, turinčių unikalių savybių:
+        <br>
+        <br>
+        Trapecija: keturkampis, turintis bent vieną porą lygiagrečių kraštinių. Šios kraštinės vadinamos pagrindais, o kitos dvi – šoninėmis kraštinėmis.
+        <br>
+        Lygiašonė trapecija: Trapecija, kurios šoninės kraštinės yra lygios. Joje įstrižainės taip pat lygios, o kampai prie kiekvieno pagrindo yra lygūs.
+        <br>
+        <br>
+        Lygiagretainis: keturkampis, kurio abi priešingų kraštinių poros yra lygiagrečios. Priešingos kraštinės ir kampai yra lygūs. Gretutiniai kampai sudaro $180^\circ$. Įstrižainės susikerta ir susikirtimo taške dalijasi pusiau.
+        <br>
+        <br>
+        Rombas: lygiagretainis, kurio visos keturios kraštinės yra lygios. Turi visas lygiagretainio savybes, taip pat įstrižainės susikerta stačiuoju kampu ir įstrižainės dalija rombo kampus pusiau.
+    </p>
+
+    <h4>Keturkampiai su apskritimais</h4>
+    <p>
+        Keturkampiai gali būti susiję su apskritimais keliais būdais:
+        <br>
+        <br>
+        Įbrėžtinis keturkampis: keturkampis, kurio visos viršūnės guli ant vieno apskritimo. Toks apskritimas vadinamas apibrėžtiniu apskritimu. Įbrėžtinio keturkampio priešingų kampų suma yra $180^\circ$ ($\angle A + \angle C = 180^\circ$ ir $\angle B + \angle D = 180^\circ$).
+        <br>
+        <br>
+        Apibrėžtinis keturkampis: keturkampis, apie kurį galima apibrėžti apskritimą. Tai reiškia, kad apskritimas liečia visas keturkampio kraštines. Toks apskritimas vadinamas įbrėžtiniu apskritimu.
+        </p>
+
+    <h4>Ptolomėjaus teorema</h4>
+    <p>
+        Įbrėžtinio keturkampio įstrižainių sandauga lygi priešingų kraštinių sandaugų sumai ($AC \cdot BD = AB \cdot CD + BC \cdot DA$).
+        <br>
+        Jeigu norite pasiskaityti daugiau:
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Ptolemėjaus_teorema#:~:text=Ptolemėjaus%20teorema%20–%20euklidinės%20geometrijos%20teorema,tada%2C%20kai%20jis%20yra%20įbrėžtinis." target="_blank">Plačiau apie Ptolemėjaus teoremą</a>
+    </p>
+
+    <h4>Pitoto teorema</h4>
+    <p>
+        Apibrėžtinio keturkampio priešingų kraštinių ilgių sumos yra lygios ($AB + CD = BC + DA$).
+    </p>
+
+    <h4>Daugiau apie keturkampių savybes</h4>
+    <p>
+        Visa reikalinga informacija apie keturkampius (su paveikslėliais, formulėmis ir t. t.):
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Keturkampis#" target="_blank">Keturkampiai</a>
+    </p>
+
+    <h4>Toliau apie olimpiadinę keturkampių geometriją</h4>
+    <p>
+        Keturkampiai su apskritimais labai dažnai pasitaiko olimpiadiniuose geometrijos uždaviniuose. Daugiau apie juos pasiskaityti ir paspręsti galite matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose:
+        <br>
+        <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie keturkampius su apskritimais (skyrelis "Apskritimai" - 125 psl.)</a>
+    </p>
+        </section>
+        <section class="content-box">
+            <h2 id="funkciju-uzdaviniai">Keturkampiai - uždaviniai</h2>
+            <div class="example-box">
+                <p><b>1. Stačiakampio $ABCD$ kraštinės $AB = 8$ cm ir $BC = 6$ cm. Raskite įstrižainės $AC$ ilgį.
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                    Stačiakampis turi keturis stačiuosius kampus. Pažvelkime į stačiąjį trikampį $ABC$ (su stačiuoju kampu ties $B$).
+                    <br>
+                    <br>
+                    Kraštinės $AB$ ir $BC$ yra šio stačiojo trikampio statiniai, o įstrižainė $AC$ yra įžambinė.
+                    <br>
+                    <br>
+                    Galime taikyti Pitagoro teoremą: $AB^2 + BC^2 = AC^2$.
+                    <br>
+                    <br>
+                    Įstatykime duotas kraštinių reikšmes:
+                    <br>
+                    $8^2 + 6^2 = AC^2$
+                    <br>
+                    $64 + 36 = AC^2$
+                    <br>
+                    $100 = AC^2$
+                    <br>
+                    <br>
+                    Ištraukiame šaknį:
+                    <br>
+                    $AC = \sqrt{100}$
+                    <br>
+                    $AC = 10$ cm.
+                    <br>
+                    <br>
+                    Įstrižainės $AC$ ilgis yra 10 cm.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>2. Įbrėžtinio keturkampio $ABCD$ kampai $\angle ADC = 110^\circ$ ir $\angle DAB = 80^\circ$. Raskite kampą $\angle BCD$.
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Įbrėžtinio keturkampio savybė: svarbiausia įbrėžtinio keturkampio savybė yra ta, kad jo priešingų kampų suma lygi $180^\circ$.
+                        <br>
+                        Taigi, $\angle DAB + \angle BCD = 180^\circ$ ir $\angle ABC + \angle ADC = 180^\circ$.
+                        <br>
+                        <br>
+                        Mums duota $\angle DAB = 80^\circ$.
+                        <br>
+                        Naudojame pirmąją savybę: $\angle DAB + \angle BCD = 180^\circ$.
+                        <br>
+                        $80^\circ + \angle BCD = 180^\circ$.
+                        <br>
+                        $\angle BCD = 180^\circ - 80^\circ$.
+                        <br>
+                        $\angle BCD = 100^\circ$.
+                        <br>
+                        <br>
+                        Kampas $\angle BCD = 100^\circ$.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>3. Lygiagretainio $ABCD$ kraštinės $AB = 7$ cm ir $BC = 5$ cm. Kampas tarp kraštinių $\angle ABC = 120^\circ$. Raskite įstrižainės $AC$ ilgį.
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p> 
+                        Lygiagretainio priešingos kraštinės yra lygios, o priešingi kampai yra lygūs. Gretutiniai kampai sudaro $180^\circ$. Taigi, $\angle ABC = 120^\circ$. Tada $\angle BAD = 180^\circ - 120^\circ = 60^\circ$.
+                        <br>
+                        <br>
+                        Norėdami rasti įstrižainės $AC$ ilgį trikampyje $ABC$, galime taikyti kosinusų teoremą. Kosinusų teorema teigia: $c^2 = a^2 + b^2 - 2ab \cos(C)$, kur $C$ yra kampas tarp kraštinių $a$ ir $b$.
+                        <br>
+                        <br>
+                        Trikampyje $ABC$ turime kraštines $AB = 7$ cm, $BC = 5$ cm ir kampą tarp jų $\angle ABC = 120^\circ$. Taikome kosinusų teoremą įstrižainei $AC$: $AC^2 = AB^2 + BC^2 - 2 \cdot AB \cdot BC \cdot \cos(\angle ABC)$
+                        <br>
+                        $AC^2 = 7^2 + 5^2 - 2 \cdot 7 \cdot 5 \cdot \cos(120^\circ)$
+                        <br>
+                        <br>
+                        Žinome, kad $\cos(120^\circ) = -\cos(60^\circ) = -\frac{1}{2}$.
+                        <br>
+                        $AC^2 = 49 + 25 - 2 \cdot 7 \cdot 5 \cdot \left(-\frac{1}{2}\right)$
+                        <br>
+                        $AC^2 = 74 - 70 \cdot \left(-\frac{1}{2}\right)$
+                        <br>
+                        $AC^2 = 74 - (-35)$
+                        <br>
+                        $AC^2 = 74 + 35$
+                        <br>
+                        $AC^2 = 109$
+                        <br>
+                        <br>
+                        Ištraukiame šaknį: $AC = \sqrt{109}$ cm.
+                        <br>
+                        <br>
+                        Įstrižainės $AC$ ilgis yra $\sqrt{109}$ cm.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>Kai kuriems (vyresniems ar turintiems kažkiek olimpiadinės patirties) šie uždaviniai galėjo pasirodyti lengvi, o teorija - jau žinoma. Sunkesnių uždavinių ir platesnės teorijos galite rasti matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose: </b>
+                    <br>
+            <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie keturkampius su apskritimais (skyrelis "Apskritimai" - 125 psl.)</a>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h2>Apibendrinimas</h2>
+            <p>
+                <center>Praėję šį skyrių, jūs įgavote pagrindus ir esate pasiruošę toliau gilintis bei spręsti olimpiadinės geometrijos uždavinius. Sėkmės!</center>
+            </p>
+        </section>
+        <section class="content-box">
+            <h2 id="papildomi-istekliai">Papildomi ištekliai</h2>
+            <ul>
+                <li>Lietuviškas Youtube kanalas, kuriame yra daug olimpiadinės matematikos uždavinių su sprendimais:
+                <br>
+                <a href="https://www.youtube.com/@Kofka505maths/videos">Kofka505</a></li>
+                <br>
+                <br>
+                <li>Matematikos knyga, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose (joje aprašomos visos 4 olimpiadinės matematikos sritys):
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf">Matematikos knyga</a></li>
+                <br>
+                <br>
+                <li>Praeitų metų Lietuvos mokinių matematikos olimpiados (LMMO) užduotys:
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/lmmo/">LMMO svetainė</a></li>
+            </ul>
+        </section>
+    </main>
+
+
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <script>
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            themeToggle.textContent = savedTheme === 'dark-mode' ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
+            themeToggle.textContent = isDarkMode ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        });
+    </script>
+</body>
+</html>

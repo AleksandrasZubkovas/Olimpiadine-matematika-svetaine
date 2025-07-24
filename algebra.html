@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Keep your existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .dark-mode header {
+            background: #3700b3;
+        }
+        #theme-toggle {
+            background: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+        .dark-mode #theme-toggle {
+            background: #333;
+            color: white;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+            transition: background 0.3s;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .dark-mode main {
+            background: #1e1e1e;
+            color: #f4f4f4;
+        }
+        .content-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .dark-mode .content-box {
+            background: #333;
+            color: #f4f4f4;
+        }
+        h2.main {
+            text-align: center;
+        }
+        h1.main {
+            text-align: center;
+            color: black;
+            font-size: 60px;
+        }
+        
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        /* Add these new styles for better layout */
+        .example-box {
+            background-color: #f0f8ff; /* A lighter background for examples */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .problem-set {
+            margin-top: 20px;
+        }
+        .problem {
+            margin-bottom: 10px;
+        }
+        details {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .dark-mode details {
+            background-color: #222;
+        }
+
+        .dark-mode .example-box,
+        .dark-mode .problem,
+        .dark-mode .problem-set {
+            background-color: #222;
+            color: #f4f4f4;
+        }
+
+        .dark-mode a {
+        color: #90caf9; /* šviesiai mėlyna */
+        }
+        .dark-mode a:hover {
+            color: #bbdefb; /* dar šviesesnė mėlyna per hover */
+        }
+
+        .toc {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding-left: 0;
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .toc li a {
+            display: block;
+            padding: 8px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .toc li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Tamsus režimas */
+        .dark-mode .toc li a {
+            background-color: #2a2a2a;
+            color: #f4f4f4;
+        }
+
+        .dark-mode .toc li a:hover {
+            background-color: #444;
+        }
+
+        .dark-mode nav a {
+        color: white;
+        }
+        .dark-mode nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Pagrindinis fonas ir tekstas */
+        body, main, header, nav, .content-box, .example-box, details, #theme-toggle {
+    transition: background-color 0.3s ease;
+}
+
+a {
+    transition: color 0.3s ease;
+}
+
+
+/* Turinys (TOC) */
+.toc li a {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Mygtukas „į viršų“ */
+#back-to-top {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode nav a:hover {
+    color: white; /* išlaikyti baltą spalvą per hover */
+}
+
+
+
+
+        #back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        #back-to-top:hover {
+            background: #3700b3;
+        }
+    </style>
+
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+    <header>
+        <h1>Algebra</h1>
+        <button id="theme-toggle">🌙 Tamsus režimas</button>
+    </header>
+    <nav>
+        <ul id="nav-list">
+            <li><a href="website.html">Pagrindinis</a></li>
+            <li><a href="algebra.html">Algebra</a></li>
+            <li><a href="number_theory.html">Skaičių teorija</a></li>
+            <li><a href="geometry.html">Geometrija</a></li>
+            <li><a href="combinatorics.html">Kombinatorika</a></li>
+            <li><a href="forum.html">Forumas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="content-box">
+            <h1>Įvadas į algebrą</h1>
+            <p>
+                <center>Algebra yra matematikos šaka, tirianti veiksmų su įvairiais dydžiais (reiškiamais raidėmis) bendrąsias savybes, nepriklausomas nuo tų dydžių kilmės. Tai viena seniausių matematikos šakų, kilusi iš senovės Rytų civilizacijų, kur buvo siekiama rasti apibendrintų metodų spręsti pasikartojančius uždavinius. </center>
+            </p>
+        </section>
+
+        <section class="content-box">
+            <h2>Turinys</h2>
+            <ul class="toc">
+                <li><a href="#polinomai-teorija">Polinomų teorija</a></li>
+                <li><a href="#polinomai-uzdaviniai">Polinomų uždaviniai</a></li>
+                <li><a href="#funkciju-teorija">Funkcinių lygčių teorija</a></li>
+                <li><a href="#funkciju-uzdaviniai">Funkcinių lygčių uždaviniai</a></li>
+                <li><a href="#nelygybes-teorija">Nelygybių teorija</a></li>
+                <li><a href="#nelygybiu-uzdaviniai">Nelygybių uždaviniai</a></li>
+                <li><a href="#papildomi-istekliai">Papildomi ištekliai</a></li>
+            </ul>
+        </section>
+
+        <section class="content-box">
+            <h1> Funkcijos</h1>
+            <h2 id="polinomai-teorija">Polinomai - teorija</h2>
+            <h4>Kas yra polinomas?</h4>
+    <p>
+        Polinomas – tai reiškinys, sudarytas iš vienos ar daugiau kintamųjų (šiuo atveju x) pakeltų į neneigiamus sveikus laipsnius 
+        ir padaugintų iš koeficientų (šiuo atveju \(a_i\)). Pvz.:
+        <br>
+        \[
+        P(x) = a_nx^n + a_{n-1}x^{n-1} + \dots + a_1x + a_0
+        \]
+    </p>
+
+    <h4>Polinomo laipsnis</h4>
+    <p>
+        Polinomo laipsnis – tai didžiausias kintamojo laipsnis su neneigiamu koeficientu.
+        Pvz., jei \( P(x) = 4x^3 + 2x^2 - x + 7 \), tai jo laipsnis yra 3. Kartu su didžiausio nario koeficientu laipsnis suteikia stebėtinai daug informacijos apie daugianarį: kaip jis elgiasi savo limite, kai kintamasis labai padidėja (teigiama arba neigiama kryptimi), ir kiek šaknų jis turi.
+    </p>
+
+    <h4>Polinomo šaknys</h4>
+    <p>
+        Šaknis – tai tokia reikšmė \( x \), kuriai \( P(x) = 0 \). 
+        Pagal pagrindinę algebros teoremą, kiekvienas laipsnio \( n \) polinomas turi \( n \) kompleksinių šaknų (su kartotinumu). Pavyzdžiui, 3 yra \(x^2 - 9\) šaknis, nes \(3^2 - 9 = 0\). Kai kuriems polinomams galima lengvai nustatyti jį lygų nuliui ir išspręsti arba kitaip rasti šaknis, tačiau kai kuriais atvejais tai daug sudėtingiau.
+        <br>
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Polinomas" target="_blank">Plačiau apie polinomus</a>
+    </p>
+
+    <h4>Faktorizavimas</h4>
+    <p>
+        Polinomo faktorizavimas – tai jo išskaidymas į sandaugą. Pvz.:
+        <br>
+        \[
+        x^2 - 5x + 6 = (x - 2)(x - 3)
+        \]
+        <br>
+        Skirtingi faktorizavimo metodai padeda surasti polinomo šaknis. Pvz.:
+        <br>
+        \[
+        x^3 + 3x^2 - 4x - 12 = 0
+        \]
+        <br>
+        Šis polinomas lengvai išsiskaido į:
+        <br>
+        \[
+        (x + 3)(x^2 - 4) = 0
+        \]
+        \[
+        (x + 3)(x - 2)(x + 2) = 0
+        \]
+        <br>
+        Dabar aiškiai matome, kad polinomo šaknys yra -3, -2 ir 2.
+        <br>
+        <br>
+        Dažnai faktorizavime naudojamos greitosios daugybos taisyklės:
+        <br>
+        \[
+        (a ± b)^2 = a^2 ± 2ab + b^2
+        \]
+        \[
+        (a ± b)^3 = a^3 ± 3a^2 b + 3ab^2 ± b^3
+        \]
+        \[
+        a^2 - b^2 = (a - b)(a + b)
+        \]
+        \[
+        a^3 ± b^3 = (a ± b)(a^2 ∓ ab + b^2)
+        \]
+        <br>
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Faktorizavimas" target="_blank">Plačiau apie faktorizavimą</a>
+    </p>
+
+    <h4>Racionaliųjų šaknų teorema</h4>
+    <p>
+        Dažnai norime rasti polinomų su integraliniais koeficientais šaknis. Tarkime, kad turime tokį polinomą: 
+        <br>
+        \[
+        P(x) = a_nx^n + a_{n-1}x^{n-1} + \dots + a_1x + a_0
+        \]
+        Racionaliosios šaknies teorema teigia, kad jei \(P(x)\) turi racionalią šaknį \( \frac{p}{q} \) ir ši trupmena yra visiškai supaprastinta (p ir q neturi bendrų daliklių, didesnių už 0), tai p yra laisvojo nario  (\(a_0\)) daliklis, o q yra \(a_n\) daliklis. Tai patogu, nes tai reiškia, kad turime patikrinti tik nedidelį skaičių atvejų, kad rastume visas daugelio polinomų racionaliąsias šaknis, o tada galime naudoti faktorizavimą, kad surasti visas polinomo šaknis. Pavyzdžiai su šia teorema bus pateikti prie uždavinių.
+        <br>
+    </p>
+
+    <h4>Dekarto ženklų taisyklė</h4>
+    <p>
+        Pagal pagrindinę algebros teoremą didžiausias n laipsnio daugianario šaknų (nebūtinai realių) skaičius yra n. Tai nieko nesako apie tai, ar šios šaknys yra teigiamos, ar neigiamos. Dekarto ženklų taisyklė sako, kad polinomo \(P(x)\) teigiamų šaknų skaičius yra lygus polinomo koeficientų ženklų pasikeitimų skaičiui arba yra mažesnis už šį skaičių 2 kartotiniu. Neigiamų lygties šaknų skaičius yra lygus \(P(-x)\) koeficientų ženklų pasikeitimų skaičiui arba yra mažesnis už šį skaičių 2 kartotiniu.
+        <br>
+        Pavyzdžiui, polinomas
+        <br>
+        \[
+        P(x) = +x^3 + x^2 - x - 1
+        \]
+        <br>
+        tarp antrojo ir trečiojo narių yra vienas ženklo pokytis, nes ženklų seka yra (+, +, -, -). Todėl jis turi lygiai vieną teigiamą šaknį. Norėdami rasti neigiamų šaknų skaičių, pakeiskime nelyginį eksponentą turinčių narių koeficientų ženklus, t. y. polinomui taikykime Dekarto ženklų taisyklę:
+        <br>
+        \[
+        P(-x) = -x^3 + x^2 + x - 1
+        \]
+        <br>
+        Šis polinomas turi du ženklų pokyčius, nes ženklų seka yra (-, +, +, -), o tai reiškia, kad šis antrasis daugianaris turi dvi arba nulį teigiamų šaknų, taigi pradinis daugianaris P(x) turi dvi arba nulį neigiamų šaknų.
+        <br>
+        <br>
+        Iš tiesų, pirmojo polinomo faktorizacija yra tokia:
+        <br>
+        \[
+        P(x) = (x + 1)^2 (x - 1)
+        \]
+        <br>
+        todėl šaknys yra -1 (du kartus) ir +1 (vieną kartą), kaip ir teigia Dekarto ženklų taisyklė.
+    </p>
+
+    <h4>Binomo formulė</h4>
+    <p>
+        Ši teorema leidžia išreikšti reiškinį \( (a + b)^n \) kaip sumą:
+        <br>
+        \[
+        (a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k
+        \]
+        <br>
+        Kitaip sakant, kai \((a + b)^n\) atskleidžiamas, tai koeficientai prie nežinomųjų sutampa su Paskalio trikampio n-tosios eilutės skaičiais. Apie jį galite pasiskaityti žemiau pateiktoje nuorodoje.
+        <br>
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Paskalio_trikampis" target="_blank">Plačiau apie Paskalio trikampį</a>
+        <br>
+        <br>
+        Pavyzdžiui, \((a + b)^n = a^5 + 5a^4 b + 10a^3 b^2 + 10a^2 b^3 + 5ab^4 + b^5\), kur koeficientai 1 = \(\binom{5}{0}\), 5 = \(\binom{5}{1}\), 10 = \(\binom{5}{2}\) ir t. t.
+        <br>
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Binomo_formulė" target="_blank">Plačiau apie Binomo formulę</a>
+    </p>
+
+        </section>
+        <section class="content-box">
+            <h2 id="polinomai-uzdaviniai">Polinomai - uždaviniai</h2>
+            <div class="example-box">
+                <p><b>1. Suraskite visas polinomo \(x^4 - x^3 - x^2 + x + 57\) realiąsias šaknis.</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>Daugianaris turi pagrindinį koeficientą 1 ir laisvąjį narį 3 ⋅ 19, todėl racionaliųjų šaknų teorema garantuoja, kad vienintelės galimos racionaliosios šaknys yra 57-ių teigiami ir neigiami dalikliai (-57, -19, -3, -1, 1, 3, 19 ir 57). Nesunku įsitikinti, kad nė vienas iš jų nėra daugianario šaknis, taigi daugianaris neturi racionaliųjų šaknų.</p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>2. Išspręskite lygtį \(x^3 - 5x^2 + 2x + 8 = 0.\)</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>Kadangi koeficientas prie didžiausią laipsnį turinčio nario \(x^3\) yra 1, o laisvasis narys yra 8, tai racionaliųjų šaknų teorema garantuoja, kad vienintelės galimos racionaliosios šaknys yra 8-eto teigiami ir neigiami dalikliai (-8, -4, -2, -1, 1, 2, 4, 8). Nesunku įsitikinti, kad -1 yra šios lygties sprendinys. O tada atliekame faktorizaciją žinodami, kad x + 1 bus šio polinomo dauginamasis:
+                        <br>
+                        \[
+                        x^3 - 5x^2 + 2x + 8 = (x + 1)(x^2 - 6x + 8)
+                        \]
+                        <br>
+                        Tada, išsprendę kvadratinę lygtį \(x^2 - 6x + 8 = 0\), gauname du sprendinius x = 2 ir x = 4, vadinasi galime išskaidyti polinomą taip:
+                        <br>
+                        \[
+                        (x + 1)(x - 2)(x - 4) = 0
+                        \]
+                        <br>
+                        O tada akivaizdūs visi šios lygties sprendiniai: x = -1, 2, 4.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>3. Stačiakampio plotas aprašomas lygtimi \(x^3 - 2x^2 - 6x + 12\), o jo ilgis lygus \(x - 2\). Suraskite stačiakampio plotį. </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>Daugianaris turi pagrindinį koeficientą 1 ir laisvąjį narį 3 ⋅ 2 ⋅ 2, todėl racionaliųjų šaknų teorema garantuoja, kad vienintelės galimos racionaliosios šaknys yra 12-os teigiami ir neigiami dalikliai (-12, -6, -4, -3, -2, -1, 1, 2, 3, 4, 6 ir 12). Žinome, kad stačiakampio ilgis yra x - 2, vadinasi 2 turi būti \(x^3 - 2x^2 - 6x + 12 = 0\) sprendinys. Naudojame faktorizaciją:
+                        <br>
+                        <br>
+                        \(x^3 - 2x^2 - 6x + 12 = 0\)
+                        <br>
+                        <br>
+                        \(x^2(x - 2) - 6(x - 2) = 0\)
+                        <br>
+                        <br>
+                        \((x - 2)(x^2 - 6) = 0\)
+                        <br>
+                        <br>
+                        Kadangi stačiakampio plotas yra jo ilgio ir pločio sandauga, o \(x - 2\) yra jo ilgis, tai \(x^2 - 6\) bus jo plotis.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>4. (LMMO 2024) Išspręskite lygtį: </b>
+                    <br>
+                    <br>
+                    <h3>\(2x^2 + 6x + 9 = 7x\sqrt{2x + 3}\)</h3></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>Šis sprendimas reikalauja ir dar vieno triuko, naudojamo algebroje - keitinio.
+                        <br>
+                        Pasiimame t = \(\sqrt{2x + 3}\). Tada lygtis tampa:
+                        \(2x^2 + 3t^2 = 7xt\)
+                        <br>
+                        Tada naudojame faktorizaciją:
+                        <br>
+                        <br>
+                        \(2x^2 - xt + 3t^2 - 6xt = 0\)
+                        <br>
+                        <br>
+                        \(x(2x - t) - 3t(2x - t) = 0\)
+                        <br>
+                        <br>
+                        \((2x - t)(x - 3t) = 0\)
+                        <br>
+                        <br>
+                        Vadinasi \(2x - t = 0\) arba \(x - 3t = 0\). Tada belieka įsistatyti į keitinį jam priskirtą reiškmę ir išspręsti kvadratines lygtis. Taip pat abiem atvejais gausime po du x sprendinius - vieną teigiamą, kitą neigiamą, bet akivaizdu, kad \(2x^2 + 6x + 9 > 0\) su visais x, o taip pat \(\sqrt{2x + 3} > 0\), vadinasi ir \(x > 0\) (kad sąlyga galiotų), todėl abiem atvejais neigiamus spreninius atmesime. O tada beliks du x sprendiniai:
+                        <br>
+                        \(x\) = \(\frac{1 + \sqrt{13}}{4}\), \(9 + 6\sqrt{3}\)
+                    </p>
+                </details>
+            </div>
+
+            <div class="example-box">
+                <p><b>5. (LMMO 2025) Išspręskite lygtį: </b>
+                    <br>
+                    <br>
+                    <h2>\(\frac{x^2 + 11x - 6}{x^2 - x - 6} = \frac{26x}{x^2 - 6}\)</h2></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>Čia vėl galime naudoti keitinį \(t = x^2 - 6\). Tada lygybė tampa:
+                        \[
+                        \frac{t + 11x}{t - x} = \frac{26x}{t}
+                        \]
+                        Tada dauginame kryžmai ir naudojame faktorizaciją:
+                        \[
+                        t^2 - 15xt + 26x^2 = 0
+                        \]
+                        \[
+                        t^2 - 2xt + 26x^2 - 13xt = 0
+                        \]
+                        \[
+                        t(t - 2x) - 13x(t - 2x) = 0
+                        \]
+                        \[
+                        (t - 2x)(t - 13x) = 0
+                        \]
+                        Vadinasi \(t - 2x = 0\) arba \(t - 13x = 0\). Belieka įsistatyti į keitinį jam priskirtą reikšmę ir išspręsti kvadratines lygtis. Iš viso gausime 4 sprendinius ir jie visi tenkins duotąją lygybę:
+                        <br>
+                        \(x\) = \(1 ± \sqrt{7}\), \(\frac{13 ± \sqrt{193}}{2}\)
+                    </p>
+                </details>
+            </div>
+        </section>
+        <section class="content-box">
+        <h1>Funkcijos</h1>
+            <h2 id="funkciju-teorija">Funkcinės lygtys - teorija</h2>
+            <h4>Kas yra funkcinė lygtis?</h4>
+    <p>
+        Funkcinė lygtis, grubiai tariant, yra lygtis, kurioje kai kurie ieškomi nežinomieji yra funkcijos. Pavyzdžiui, toliau pateiktos funkcinės lygtys:
+        <br>
+        \[
+        f(x) + 2f(3x) = 5x
+        \]
+        \[
+        h(x) + h(\frac{3}{x}) = 3x + 2
+        \]
+        <br>
+        Prieš pradedant mokytis funkcines lygtis, siūloma perskaityti šį įvadą (pirmus 3-4 psl.), kad geriau suprasti, kas tai yra:
+        <br>
+        <a href="http://web.vu.lt/mif/v.stakenas/a+o/1999-1/1999-1-5-28.pdf" target="_blank">Įvadas į funkcines lygtis</a>
+    </p>
+
+    <h4>Atvirkštinės funkcijos</h4>
+    <p>
+        Atvirkštinė funkcija - tai funkcija, kuri „panaikina“ funkciją. Pavyzdžiui, panagrinėkime šią funkciją:
+        \[
+        f(x) = x^2 + 6.
+        \]
+        Funkcija \( g(x) = \sqrt{x - 6} \) tenkina sąlygą \( f(g(x)) = x \). Taigi, šiuo atveju \(g(x)\) yra vadinama atvirkštine funkcija. Dažnai atvirkštinės funkcijos \(f(x)\) žymimos \(f^{-1}(x)\).
+        </p>
+
+    <h4>Ciklinės funkcijos</h4>
+    <p>
+        Ciklinė funkcija yra funkcija, kuri tenkina duotą sąlygą:
+        \[
+        f(f(f(...f(x)...))) = x
+        \]
+        Paprastas tokios funkcijos pavyzdys yra \( f(x) = 1/x \), nes \( f(f(x)) = f(1/x) = x \). Ciklinės funkcijos dažnai padeda sprendžiant funkcines lygtis ar nelygybes.
+    </p>
+
+    <h4>Toliau apie funkcines lygtis</h4>
+    <p>
+        Funkcinės lygtys yra labai dažna tema olimpiadiniuose uždaviniuose. Daugiau apie jas pasiskaityti ir paspręsti galite matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose:
+        <br>
+        <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie funkcines lygtis (skyrelis "Funkcinės lygtys" - 76 psl.)</a>
+    </p>
+        </section>
+        <section class="content-box">
+            <h2 id="funkciju-uzdaviniai">Funkcinės lygtys - uždaviniai</h2>
+            <div class="example-box">
+                <p><b>1. Suraskite visas funkcijas \(f : \mathbb{R} \to \mathbb{R}\), tenkinančias šią sąlygą:
+                \[
+                3f(x) - 4f(1/x) = x^2
+                \]
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>Įsistatome x = y ir x = 1/y. Tada gauname dvi lygtis:
+                    <br>
+                    <br>
+                    \(3f(y) - 4f(1/y) = y^2\)
+                    <br>
+                    <br>
+                    \(3f(1/y) - 4f(y) = 1/y^2\)
+                    <br>
+                    <br>
+                    Padauginę pirmąją lygtį iš 3, o antrąją iš 4 ir jas sudėję, gausime:
+                    <br>
+                    <br>
+                    \(-7f(y) = 3y^2 + \frac{4}{y^2}\)
+                    <br>
+                    <br>
+                    Vadinasi, kad \(f(x) = -\frac{3}{7}x^2 - \frac{4}{7x^2}\) su visais \(x \in \mathbb{R}\).
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>2. (Matematikos knyga) Suraskite visas funkcijas \(f : \mathbb{R} \to \mathbb{R}\), tenkinančias šias sąlygas:
+                    \[
+                    f(x + y) = f(x)
+                    \]
+                    \[
+                    f(0) = 0
+                    \]
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                    Įsistatome x = 0. Tada gauname \(f(y) = f(0) = 0\). Vadinasi su visais \(y \in \mathbb{R}\) galioja ši sąlyga. Patikrinę gauname, kad šis sprendinys tinka, todėl atsakymas yra \(f(x) = 0\) su visais \(x \in \mathbb{R}\).
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>3. Ar \(f(x) = 2x + 5\) (\(f : \mathbb{R} \to \mathbb{R}\)) yra duotos lygybės sprendinys?
+                    \[
+                    f(x) + 2 = f(x + 1)
+                    \]
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p> Įsistatome duotąjį sprendinį ir tikriname, ar jis tenkina sąlygą su visais \(x \in \mathbb{R}\):
+                        <br>
+                        <br>
+                        \(2x + 5 + 2 = 2(x + 1) + 5\)
+                        <br>
+                        <br>
+                        \(2x + 7 = 2x + 7\)
+                        <br>
+                        <br>
+                        \(0 = 0\)
+                        <br>
+                        <br>
+                        Matome, kad su visais \(x \in \mathbb{R}\) funkcija \(f(x) + 2 = f(x + 1)\) tenkina duotąją sąlygą, todėl tai yra duotos lygybės sprendinys.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>Daugiau uždavinių ir teorijos galite rasti matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose: </b>
+                    <br>
+            <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie funkcines lygtis (skyrelis "Funkcinės lygtys" - 76 psl.)</a>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h1>Nelygybės</h1>
+                <h2 id="nelygybes-teorija">Nelygybės - teorija</h2>
+                <h4>Kas yra nelygybės?</h4>
+        <p>
+            Nelygybės yra algebros šaka, susijusi su kintamųjų tarpusavio santykiais, žymimais \(>, <, \geq\) arba \(\leq\).
+            <br>
+            Pavyzdžiui, dviems skaičiams a ir b:
+            <br>
+            <br>
+            a > b reiškia, kad a yra didesnis už b, vadinasi a - b yra teigiamas.
+            <br>
+            a < b reiškia, kad a yra mažesnis už b, vadinasi a - b yra neigiamas.
+            <br>
+            a ≥ b reiškia, kad a yra didesnis arba lygus b, vadinasi a - b yra neneigiamas.
+            <br>
+            a ≤ b reiškia, kad a yra mažesnis arba lygus b, vadinasi a - b yra neteigiamas.
+            <br>
+            <br>
+            Kai kurios nelygybių savybės:
+            <br>
+            <br>
+            Jeigu a > b, tai a + c > b, kai c ≥ 0.
+            <br>
+            Jeigu a ≥ b, tai a + c ≥ b, kai c ≥ 0.
+            <br>
+            Jeigu a ≥ b, tai a + c > b, kai c > 0.
+        </p>
+    
+        <h4>Nelygybių sprendimas</h4>
+        <p>
+            Sprendžiant nelygybes, tuos pačius dydžius galima pridėti arba atimti iš abiejų pusių nekeičiant nelygybės ženklo, panašiai kaip lygtyse. Tačiau daugindami, dalydami arba keldami kvadratu turime žiūrėti į ženklą. Ypač atkreipkite dėmesį, kad nors 3 > 2, mes turime 3 < -2. Daugindami arba dalydami iš neigiamų dydžių turime apversti ženklą. Sunkumų gali kilti tada, kai dauginamas dydis gali turėti skirtingus ženklus, priklausomai nuo kintamojo.
+            <br>
+            Taip pat turime būti atsargūs dėl sprendinių ribų. Pavyzdžiui, nelygybėje \(x > \frac{3}{2}\) reikšmė \(x = \frac{3}{2}\) netenkina sąlygos, nes nelygybė yra griežta. Tačiau nelygybėje \(x \ge \frac{3}{2}\) reikšmė \(x = \frac{3}{2}\) tenkina nelygybę, nes nelygybė nėra griežta.
+            <br>
+            Sprendinius galima užrašyti intervalu. Uždarosioms riboms naudojami kvadratiniai skliaustai [ ], o atvirosioms riboms (ir riboms ties begalybe) - paprasti skliaustai ( ). Pavyzdžiui, \(x \in [3,6)\) reiškia \(3 \le x < 6\).
+        </p>
+    
+        <h4>Tiesinės nelygybės</h4>
+        <p>
+            Tiesinės nelygybės gali būti sprendžiamos taip pat kaip tiesinės lygtys, kad būtų gauti kintamojo apribojima (sprendinių intervalas). Tačiau dauginant ir (arba) dalijant abi puses iš neigiamų skaičių, reikia apversti nelygybės ženklą.
+            <br>
+            <br>
+            Pavyzdžiui:
+            <br>
+            <br>
+                \(5x + 5 > 15\)
+            <br>
+                \(5x > 15 - 5 | :5\)
+            <br>
+                \(x > 2\)
+        </p>
+    
+        <h4>Polinominės nelygybės</h4>
+        <p>
+            Pirmoji daugianarių nelygybių sprendimo dalis labai panaši į daugianarių lygčių sprendimą - visų narių susikėlimas į vieną pusę (kad kitoje pusėje liktų tiesiog skaičius 0) ir polinomo šaknų radimas.
+            <br>
+            Tada reikia apsvarstyti ribas. Lyginame daugianario ženklą su skirtingais skaičias, esančiais tarp jo šaknų, o tada galime įsivaizduoti apytikslį daugianario grafiką ir tai, kaip jis eina per nulius (nes ėjimas per nulius gali pakeisti ženklą). Tada galime rasti atitinkamas nelygybės sprendinių ribas. Šis būdas yra vadinamas intervalų metodu. Apie jį galite pažiūrėti šiame video:
+            <br>
+            <a href="https://www.youtube.com/watch?v=ZI2pfvcORbM" target="_blank">Nelygybių sprendimas intervalų metodu</a>
+        </p>
+
+        <h4>Racionaliosios nelygybės</h4>
+        <p>
+            Sunkesnis nelygybių pavyzdys būtų toks:
+            \[
+            \frac{x - 8}{x + 5} + 4 \geq 3
+            \]
+            Problema ta, kad mes negalime tiesiog dauginti abiejų lygybės pusių iš \(x + 5\). Mes nežinome, ar dydis \(x+5\) yra teigiamas, ar neigiamas. Negalime daryti prielaidos, kad jis teigiamas visiems realiesiems \(x\). Taigi gali tekti pakeisti nelygybės ženklo kryptį, jei dauginame iš neigiamo skaičiaus. Tačiau mes taip pat nežinome, ar dydis yra neigiamas.
+            <br>
+            <br>
+            Teisingas sprendimas būtų viską perkelti į kairę nelygybės pusę ir sudaryti bendrą vardiklį (subendravardiklinti). Tada nelygybės sprendinius bus paprasta rasti atsižvelgiant į trupmenos ženklą (neigiamumą arba teigiamumą), kai \(x\) kinta.
+            \[
+            \frac{x - 8}{x + 5} + 4 \geq 3
+            \]
+            \[
+            \frac{x - 8}{x + 5} + 1 \geq 0
+            \]
+            \[
+            \frac{2x - 3}{x + 5} \geq 0
+            \]
+            Trupmeninės nelygybės x ašies kirtimas yra tos \(x\) reikšmės, dėl kurių skaitiklis ir (arba) vardiklis yra \(0\). Galime paprasčiausiai atsižvelgti į skaitiklio ir vardiklio x ašies kirtimus. Juos pavaizduojame skaičių tiesėje. Tada kiekvienoje skaičių tiesės intervale patikrinsime po vieną tašką, kad įsitikintume, ar visa sritis yra sprendinio dalis. Pavyzdžiui, pirmiau pateiktame uždavinio pavyzdyje matome, kad intervale \((-5,\frac{3}{2})\) galime patikrinti tik vieną reikšmę, pavyzdžiui, \(0\), taip pat po vieną reikšmę intervaluose \((-\infty,-5]\) ir \([\frac{3}{2},+\infty)\). Tada matome, kurie intervalai yra sprendinių aibės dalis. Taip galiausiai gaunama visa sprendinių aibė (pabandykite patys):
+            <br>
+            <br>
+            \( x \in (-\infty, -5) \cup [\frac{3}{2}, +\infty) \).
+            <br>
+            <br>
+            Reikia atsargiai vertinti sprendinių ribas. Šiame uždavinyje reikšmė \(x = \frac{3}{2}\) buvo sprendinys tik todėl, kad nelygybė nebuvo griežta. Taip pat reikšmė \(x = -5\) nebuvo sprendinys, nes tada būtų dalyba iš \(0\). Taigi, bet kuris skaitiklio x ašies kirtimas yra sprendinys tada ir tik tada, kai nelygybė nėra griežta, o kiekvienas vardiklio x ašies kirtimas niekada nėra sprendinys, nes negalime dalyti iš \(0\).
+        </p>
+
+        <h4>Bendros nelygybės</h4>
+        <p>
+            Nelygybė, kuri yra teisinga visiems realiesiems skaičiams arba visiems teigiamiems skaičiams (arba net visiems kompleksiniams skaičiams), kartais vadinama bendra arba visiška nelygybe. Realiųjų skaičių pavyzdys yra vadinamoji trivialioji nelygybė, kuri teigia, kad bet kokiam realiajam skaičiui \(x\), \(x^2 \ge 0\). Dauguma šio tipo nelygybių yra tik teigiamiems skaičiams, o šio tipo nelygybės dažnai taikomos įvairiuose olimpiadinės matematikos uždaviniuose. Daugiau jų galite rasti toliau pateiktoje nuorodoje į matematikos knygą.
+        </p>
+
+        <h4>Daugiau apie nelygybes</h4>
+        <p>
+            Nelygybės yra dažnai olimpiadinėje matematikoje pasirodanti tema. Daugiau apie jas ir daug naudingų teoremų (AM-GM nelygybė, Cauchy-Schwarz nelygybė ir daugelis kitų) galite rasti toje pačioje matematikos knygoje:
+            <br>
+            <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie nelygybes (skyrelis "Nelygybės" - 42 psl.)</a>
+        </p>
+            </section>
+            <section class="content-box">
+                <h2 id="nelygybiu-uzdaviniai">Nelygybės - uždaviniai</h2>
+                <div class="example-box">
+                    <p><b>1. Išspręskite tiesinę nelygybę ir atsakymą užrašykite intervalu:
+                    \[
+                    3(x - 2) + 5 \geq 2x - 7
+                    \]
+                    </b></p>
+                    <details><summary><b>Sprendimas</b></summary>
+                        <p>Pirmiausia, išskleiskime ir supaprastinkime nelygybę:
+                        \[
+                        3x - 6 + 5 \geq 2x - 7
+                        \]
+                        \[
+                        3x - 1 \geq 2x - 7
+                        \]
+                        Susikelkime x į vieną pusę, o skaičius į kitą:
+                        \[
+                        3x - 2x \geq -7 + 1
+                        \]
+                        \[
+                        x \geq -6
+                        \]
+                        Vadinasi, kad nelygybės sprendinių aibė yra visi realieji skaičiai x, kurie yra didesni arba lygūs -6. Intervalu tai užrašoma:
+                        <br>
+                        \(x \in [-6, \infty)\)
+                        </p>
+                    </details>
+                </div>
+                <div class="example-box">
+                    <p><b>2. Išspręskite racionaliąją nelygybę:
+                        \[
+                        \frac{2x - 4}{x + 3} \leq 0
+                        \]
+                    </b></p>
+                    <details><summary><b>Sprendimas</b></summary>
+                        <p>
+                            Norėdami išspręsti šią racionaliąją nelygybę, turime rasti skaitiklio ir vardiklio šaknis, tada nustatyti intervalus, kuriuose reiškinio ženklas yra neigiamas arba lygus nuliui.
+                            <br>
+                            <br>
+                            Raskime skaitiklio šaknį:
+                            <br>
+                            \(2x - 4 = 0 \implies 2x = 4 \implies x = 2\)
+                            <br>
+                            <br>
+                            Raskime vardiklio šaknį:
+                            <br>
+                            \(x + 3 = 0 \implies x = -3\). Atminkite, kad \(x \neq -3\), nes dalyba iš nulio yra negalima.
+                            <br>
+                            <br>
+                            Šie du taškai (\(x = 2\) ir \(x = -3\)) padalija skaičių tiesę į tris intervalus: \((-\infty, -3)\), \((-3, 2]\) ir \([2, \infty)\).
+                            <br>
+                            <br>
+                            Išbandykime po vieną tašką iš kiekvieno intervalo, kad nustatytume nelygybės ženklą:
+                            <br>
+                            <br>
+                            Intervalas \((-\infty, -3)\): Pasirinkime \(x = -4\). \(\frac{2(-4) - 4}{-4 + 3} = \frac{-8 - 4}{-1} = \frac{-12}{-1} = 12\). Kadangi \(12 \not\leq 0\), šis intervalas nėra sprendinių aibės dalis.
+                            <br>
+                            <br>
+                            Intervalas \((-3, 2]\): Pasirinkime \(x = 0\). \(\frac{2(0) - 4}{0 + 3} = \frac{-4}{3}\). Kadangi \(-\frac{4}{3} \leq 0\), šis intervalas yra sprendinių aibės dalis. Taškas \(x=2\) yra įskaičiuojamas, nes skaitiklis lygus nuliui, o nelygybė yra „mažiau arba lygu“.
+                            <br>
+                            <br>
+                            Intervalas \([2, \infty)\): Pasirinkime \(x = 3\). \(\frac{2(3) - 4}{3 + 3} = \frac{6 - 4}{6} = \frac{2}{6} = \frac{1}{3}\). Kadangi \(\frac{1}{3} \not\leq 0\), šis intervalas nėra sprendinių aibės dalis.
+                            <br>
+                            <br>
+                            Nelygybės sprendinių aibė yra: \(x \in (-3, 2]\).
+                        </p>
+                    </details>
+                </div>
+                <div class="example-box">
+                    <p><b>3. Įrodykite, kad teigiamiems realiesiems skaičiams a ir b galioja nelygybė:
+                        \[
+                        \left(a + \frac{1}{b}\right) \left(b + \frac{1}{a}\right) \geq 4
+                        \]
+                    </b></p>
+                    <details><summary><b>Sprendimas</b></summary>
+                        <p> Išskleiskime kairiąją nelygybės pusę:
+                            <br>
+                            <br>
+                            \(\begin{align*} \left(a + \frac{1}{b}\right) \left(b + \frac{1}{a}\right) &= a \cdot b + a \cdot \frac{1}{a} + \frac{1}{b} \cdot b + \frac{1}{b} \cdot \frac{1}{a} = ab + 1 + 1 + \frac{1}{ab} = ab + \frac{1}{ab} + 2 \end{align*}\)
+                            <br>
+                            <br>
+                            Dabar turime įrodyti, kad \(ab + \frac{1}{ab} + 2 \geq 4\).
+                            <br>
+                            Atėmę 2 iš abiejų pusių, gauname ekvivalenčią nelygybę, kurią reikia įrodyti:
+                            <br>
+                            <br>
+                            \(ab + \frac{1}{ab} \geq 2\)
+                            <br>
+                            <br>
+                            Pažymėkime x = ab. Kadangi a ir b yra teigiami realieji skaičiai, tai x = ab taip pat yra teigiamas realusis skaičius, t. y., x > 0.
+                            <br>
+                            <br>
+                            Taigi, mums reikia įrodyti, kad \(x + \frac{1}{x} \geq 2\) visiems \(x > 0\).
+                            <br>
+                            <br>
+                            Šią nelygybę galima įrodyti keliais būdais. Galima naudoti AM-GM nelygybę, bet paprasčiausias būdas - padauginti abi puses iš x (nelygybės ženklas nepasikeičia, nes x yra teigimas):
+                            <br>
+                            <br>
+                            \(x^2 + 1 \geq 2x\)
+                            <br>
+                            <br>
+                            \(x^2 -2x + 1 \geq 0\)
+                            <br>
+                            <br>
+                            \((x - 1)^2 \geq 0\) 
+                            <br>
+                            <br>
+                            Ir nelygybė įrodyta.
+                        </p>
+                    </details>
+                </div>
+                <div class="example-box">
+                    <p><b>Daugiau uždavinių ir teorijos galite rasti matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose: </b>
+                        <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie nelygybes (skyrelis "Nelygybės" - 42 psl.)</a>
+                </div>
+            </section>
+
+        <section class="content-box">
+            <h2>Apibendrinimas</h2>
+            <p>
+                <center>Praėję šį skyrių, jūs įgavote pagrindus ir esate pasiruošę toliau gilintis bei spręsti olimpiadinės algebros uždavinius. Sėkmės!</center>
+            </p>
+        </section>
+        <section class="content-box">
+            <h2 id="papildomi-istekliai">Papildomi ištekliai</h2>
+            <ul>
+                <li>Lietuviškas Youtube kanalas, kuriame yra daug olimpiadinės matematikos uždavinių su sprendimais:
+                <br>
+                <a href="https://www.youtube.com/@Kofka505maths/videos">Kofka505</a></li>
+                <br>
+                <br>
+                <li>Matematikos knyga, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose (joje aprašomos visos 4 olimpiadinės matematikos sritys):
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf">Matematikos knyga</a></li>
+                <br>
+                <br>
+                <li>Praeitų metų Lietuvos mokinių matematikos olimpiados (LMMO) užduotys:
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/lmmo/">LMMO svetainė</a></li>
+            </ul>
+        </section>
+    </main>
+
+
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <script>
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            themeToggle.textContent = savedTheme === 'dark-mode' ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
+            themeToggle.textContent = isDarkMode ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        });
+    </script>
+</body>
+</html>

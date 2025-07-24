@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kombinatorika</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Keep your existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .dark-mode header {
+            background: #3700b3;
+        }
+        #theme-toggle {
+            background: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+        .dark-mode #theme-toggle {
+            background: #333;
+            color: white;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #3700b3;
+            padding: 15px;
+            transition: background 0.3s;
+        }
+        .dark-mode nav {
+            background: #1a1a1a;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .dark-mode main {
+            background: #1e1e1e;
+            color: #f4f4f4;
+        }
+        .content-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .dark-mode .content-box {
+            background: #333;
+            color: #f4f4f4;
+        }
+        h2.main {
+            text-align: center;
+        }
+        h1.main {
+            text-align: center;
+            color: black;
+            font-size: 60px;
+        }
+        
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        /* Add these new styles for better layout */
+        .example-box {
+            background-color: #f0f8ff; /* A lighter background for examples */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .problem-set {
+            margin-top: 20px;
+        }
+        .problem {
+            margin-bottom: 10px;
+        }
+        details {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .dark-mode details {
+            background-color: #222;
+        }
+
+        .dark-mode .example-box,
+        .dark-mode .problem,
+        .dark-mode .problem-set {
+            background-color: #222;
+            color: #f4f4f4;
+        }
+
+        .dark-mode a {
+        color: #90caf9; /* šviesiai mėlyna */
+        }
+        .dark-mode a:hover {
+            color: #bbdefb; /* dar šviesesnė mėlyna per hover */
+        }
+
+        .toc {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding-left: 0;
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .toc li a {
+            display: block;
+            padding: 8px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .toc li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Tamsus režimas */
+        .dark-mode .toc li a {
+            background-color: #2a2a2a;
+            color: #f4f4f4;
+        }
+
+        .dark-mode .toc li a:hover {
+            background-color: #444;
+        }
+
+        .dark-mode nav a {
+        color: white;
+        }
+        .dark-mode nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Pagrindinis fonas ir tekstas */
+        body, main, header, nav, .content-box, .example-box, details, #theme-toggle {
+    transition: background-color 0.3s ease;
+}
+
+a {
+    transition: color 0.3s ease;
+}
+
+
+/* Turinys (TOC) */
+.toc li a {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Mygtukas „į viršų“ */
+#back-to-top {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode nav a:hover {
+    color: white; /* išlaikyti baltą spalvą per hover */
+}
+
+
+
+
+        #back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        #back-to-top:hover {
+            background: #3700b3;
+        }
+    </style>
+
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+    <header>
+        <h1>Kombinatorika</h1>
+        <button id="theme-toggle">🌙 Tamsus režimas</button>
+    </header>
+    <nav>
+        <ul id="nav-list">
+            <li><a href="website.html">Pagrindinis</a></li>
+            <li><a href="algebra.html">Algebra</a></li>
+            <li><a href="number_theory.html">Skaičių teorija</a></li>
+            <li><a href="geometry.html">Geometrija</a></li>
+            <li><a href="combinatorics.html">Kombinatorika</a></li>
+            <li><a href="forum.html">Forumas</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="content-box">
+            <h1>Įvadas į kombinatoriką</h1>
+            <p>
+                <center>Kombinatorika yra matematikos šaka, nagrinėjanti, kaip rasti tam tikrų baigtinių aibių elementų kiekį. Ji tiria objektų išdėstymą, grupavimą ir parinkimą pagal nustatytas taisykles. Kombinatoriniai uždaviniai yra ir matematikoje naudojamas įrankis, ir galinga priemonė sprendžiant problemas kitose matematikos ir mokslo srityse, tokiose kaip statistinė fizika, tikimybių teorija, skaičių teorija, ir teorinis kompiuterių mokslas.</center>
+            </p>
+        </section>
+
+        <section class="content-box">
+            <h2>Turinys</h2>
+            <ul class="toc">
+                <li><a href="#polinomai-teorija">Paprastų skaičiavimų taisyklių teorija</a></li>
+                <li><a href="#polinomai-uzdaviniai">Paprastų skaičiavimų taisyklių uždaviniai</a></li>
+                <li><a href="#funkciju-teorija">Gretinių, kėlinių ir derinių teorija</a></li>
+                <li><a href="#funkciju-uzdaviniai">Gretinių, kėlinių ir derinių uždaviniai</a></li>
+                <li><a href="#nelygybes-teorija">Dirichlė principo teorija</a></li>
+                <li><a href="#nelygybiu-uzdaviniai">Dirichlė principo uždaviniai</a></li>
+                <li><a href="#matzaid-teorija">Matematinių žaidimų teorija</a></li>
+                <li><a href="#matzaid-uzdaviniai">Matematinių žaidimų uždaviniai</a></li>
+                <li><a href="#papildomi-istekliai">Papildomi ištekliai</a></li>
+            </ul>
+        </section>
+
+        <section class="content-box">
+            <h1> Paprastų skaičiavimų taisyklės</h1>
+            <h2 id="polinomai-teorija">Paprastų skaičiavimų taisyklės - teorija</h2>
+            <h4>Sudėtis</h4>
+    <p>
+        Jei įvykis $A$ gali įvykti $m$ būdais, o įvykis $B$ gali įvykti $n$ būdais, ir šie įvykiai negali įvykti vienu metu (jie yra nesuderinami), tai įvykis "$A$ arba $B$" gali įvykti $m + n$ būdais.
+        <br>
+        <br>
+        Pavyzdys: jei turite 3 skirtingus marškinėlius ir 4 skirtingas maikes, tai iš viso turite $3 + 4 = 7$ skirtingus viršutinius drabužius, kuriuos galite pasirinkti apsirengti.
+    </p>
+
+    <h4>Daugyba</h4>
+    <p>
+        Jei įvykis $A$ gali įvykti $m$ būdais, ir po to, kai įvykis $A$ įvyko, įvykis $B$ gali įvykti $n$ būdais, tai įvykių pora "$A$ ir $B$" gali įvykti $m \cdot n$ būdų. Ši taisyklė gali būti išplėsta keliems įvykiams.
+        <br>
+        <br>
+        Pavyzdys: jei turite 3 marškinėlius ir 4 kelnes, tai galite sukurti $3 \cdot 4 = 12$ skirtingų aprangos derinių.
+    </p>
+
+        </section>
+        <section class="content-box">
+            <h2 id="polinomai-uzdaviniai">Paprastų skaičiavimų taisyklės - uždaviniai</h2>
+            <div class="example-box">
+                <p><b>1. Kiek yra dviženklių skaičių, kurių skaitmenų suma lygi 7?</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Dviženklis skaičius $xy$ reiškia $10x + y$. $x$ negali būti 0. Skaitmenų suma yra $x+y=7$.
+                        Galimos poros $(x, y)$:
+                        <br>
+                        <br>
+                        Jei $x=1$, $y=6$ (skaičius 16)
+                        <br>
+                        Jei $x=2$, $y=5$ (skaičius 25)
+                        <br>
+                        Jei $x=3$, $y=4$ (skaičius 34)
+                        <br>
+                        Jei $x=4$, $y=3$ (skaičius 43)
+                        <br>
+                        Jei $x=5$, $y=2$ (skaičius 52)
+                        <br>
+                        Jei $x=6$, $y=1$ (skaičius 61)
+                        <br>
+                        Jei $x=7$, $y=0$ (skaičius 70)
+                        <br>
+                        Taigi, iš viso yra 7 tokie skaičiai.
+                        <br>
+                        <br>
+                        Yra 7 dviženkliai skaičiai, kurių skaitmenų suma lygi 7.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>2. Kiek skirtingų 4 skaitmenų PIN kodų galima sudaryti, jei skaitmenys gali kartotis?</b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Kiekviena PIN kodo pozicija (tūkstančių, šimtų, dešimčių, vienetų) gali būti užpildyta bet kuriuo iš 10 skaitmenų (nuo 0 iki 9). Kadangi skaitmenys gali kartotis, kiekvienai pozicijai turime 10 pasirinkimų.
+                        <br>
+                        <br>
+                        Pagal daugybos taisyklę:
+                        <br>
+                        Pirmo skaitmens pasirinkimai: 10
+                        <br>
+                        Antro skaitmens pasirinkimai: 10
+                        <br>
+                        Trečio skaitmens pasirinkimai: 10
+                        <br>
+                        Ketvirto skaitmens pasirinkimai: 10
+                        <br>
+                        <br>
+                        Bendras PIN kodų skaičius: $10 \cdot 10 \cdot 10 \cdot 10 = 10^4 = 10000$.
+                        <br>
+                        <br>
+                        Galima sudaryti 10000 skirtingų 4 skaitmenų PIN kodų.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>3. Automobilių numeriai Lietuvoje susideda iš trijų raidžių (naudojant 24 raides) ir trijų skaitmenų (nuo 0 iki 9). Kiek skirtingų automobilių numerių galima suformuoti, jei:
+                    <br>
+                    a) Raidės ir skaitmenys gali kartotis.
+                    <br>
+                    b) Raidės ir skaitmenys negali kartotis. </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        a) Raidės ir skaitmenys gali kartotis:
+                        <br>
+                        <br>
+                        Raidžių pozicijos:
+                        <br>
+                        Pirma raidė: 24 pasirinkimai
+                        <br>
+                        Antra raidė: 24 pasirinkimai
+                        <br>
+                        Trečia raidė: 24 pasirinkimai
+                        <br>
+                        Bendras raidžių derinių skaičius: $24 \cdot 24 \cdot 24 = 24^3 = 13824$.
+                        <br>
+                        <br>
+                        Skaitmenų pozicijos:
+                        <br>
+                        Pirmas skaitmuo: 10 pasirinkimų (0-9)
+                        <br>
+                        Antras skaitmuo: 10 pasirinkimų
+                        <br>
+                        Trečias skaitmuo: 10 pasirinkimų
+                        <br>
+                        Bendras skaitmenų derinių skaičius: $10 \cdot 10 \cdot 10 = 10^3 = 1000$.
+                        <br>
+                        <br>
+                        Bendras automobilių numerių skaičius (pagal daugybos taisyklę):
+                        <br>
+                        $13824 \cdot 1000 = 13824000$.
+                        <br>
+                        <br>
+                        <br>
+                        b) Raidės ir skaitmenys negali kartotis:
+                        <br>
+                        <br>
+                        Raidžių pozicijos:
+                        <br>
+                        Pirma raidė: 24 pasirinkimai
+                        <br>
+                        Antra raidė: 23 pasirinkimai (viena jau panaudota)
+                        <br>
+                        Trečia raidė: 22 pasirinkimai (dvi jau panaudotos)
+                        <br>
+                        Bendras raidžių derinių skaičius: $24 \cdot 23 \cdot 22 = 12144$.
+                        <br>
+                        <br>
+                        Skaitmenų pozicijos:
+                        <br>
+                        Pirmas skaitmuo: 10 pasirinkimų
+                        <br>
+                        Antras skaitmuo: 9 pasirinkimai
+                        <br>
+                        Trečias skaitmuo: 8 pasirinkimai
+                        <br>
+                        Bendras skaitmenų derinių skaičius: $10 \cdot 9 \cdot 8 = 720$.
+                        <br>
+                        <br>
+                        Bendras automobilių numerių skaičius (pagal daugybos taisyklę):
+                        <br>
+                        $12144 \cdot 720 = 8743680$.
+                    </p>
+                </details>
+            </div>
+        </section>
+        <section class="content-box">
+        <h1>Gretiniai, kėliniai ir deriniai</h1>
+            <h2 id="funkciju-teorija">Gretiniai, kėliniai ir deriniai - teorija</h2>
+            <h4>Gretiniai</h4>
+    <p>
+        Gretinių iš \(n\) elementų po \(k\) yra tokie junginiai, kurie vienas nuo kito skiriasi arba pačiais elementais, arba jų išdėstymo tvarka.
+        $$A_n^k = n(n-1)(n-2) \cdot \dotsc \cdot (n-(k-1)) = \frac{n!}{(n-k)!}$$
+        Pavyzdžiui:
+        $$A_5^3 = \frac{5!}{(5-3)!} = \frac{5!}{2!} = \frac{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}{2 \cdot 1} = 5 \cdot 4 \cdot 3 = 60$$
+        Laikoma, kad $A_0^0 = 1$ ir $A_n^0 = 1$.
+        <br>
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Gretiniai" target="_blank">Daugiau apie gretinius</a>
+    </p>
+
+    <h4>Kėliniai</h4>
+    <p>
+        Kėliniai iš $n$ elementų yra gretiniai iš $n$ elementų po $n$ elementų. Kėlinių skaičius žymimas $P_n$ ir apskaičiuojamas remiantis formule:
+        $$P_n = n(n-1)(n-2) \cdot \dotsc \cdot 3 \cdot 2 \cdot 1 = n!$$
+        Kėlinių su pasikartojimais skaičiaus formulė:
+        $$P_n (k_1, k_2, k_3, \dotsc, k_n) = \frac{n!}{k_1 ! \cdot k_2 ! \cdot k_3 ! \cdot \dotsc \cdot k_n !}$$
+        Čia $n$ - junginio elementų skaičius,
+        <br>
+        $k_1$ - elemento $a_1$ pasikartojimų skaičius,
+        <br>
+        $k_2$ - elemento $a_2$ pasikartojimų skaičius,
+        <br>
+        $\dotsc$
+        <br>
+        $k_n$ - elemento $a_n$ pasikartojimų skaičius.
+        <br>
+        Visada $k_1 + k_2 + k_3 + \dotsc + k_n = n$.
+        <br>
+        <br>
+        <a href="https://lt.wikipedia.org/wiki/Kėliniai" target="_blank">Daugiau apie kėlinius</a>
+        </p>
+
+    <h4>Deriniai</h4>
+    <p>
+        Deriniai iš $n$ elementų po $k$ elementų vadinami junginiai, kurie vienas nuo kito skiriasi tik pačiais elementais (į elementų išdėstymo tvarką neatsižvelgiame).
+        <br>
+        <br>
+        Derinių iš $n$ elementų po $k$ skaičius yra žymimas $C_n^k$ ($1 \leq k \leq n$) ir apskaičiuojamas remiantis formule:
+        $$C_n^k = \frac{n(n-1)(n-2)\cdot \dotsc \cdot(n-(k-1))}{k!} = \frac{n!}{k!(n-k)!}$$
+        Laikoma, kad $C_0^0 = 1$ ir $C_n^0 = 1$.
+        <br>
+        <br>
+        Pavyzdžiui:
+        $$C_5^3 = \frac{5!}{3!(5-3)!} = \frac{5!}{3!2!} = \frac{5 \cdot 4}{2 \cdot 1} = 10$$
+        <a href="https://lt.wikipedia.org/wiki/Deriniai" target="_blank">Daugiau apie derinius</a>
+    </p>
+        </section>
+        <section class="content-box">
+            <h2 id="funkciju-uzdaviniai">Gretiniai, kėliniai ir deriniai - uždaviniai</h2>
+            <div class="example-box">
+                <p><b>1. Kiek skirtingų būdų 6 draugai gali atsisėsti į eilę kino teatre?
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Kadangi visi 6 draugai sėda į eilę, tai yra visų elementų išdėstymas, kur tvarka yra svarbi. Tai yra kėlinys. Naudosime jo formulę: $P_n = n!$.
+                        $$n=6$$
+                        $$P_6 = 6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720$$
+                        6 draugai gali atsisėsti į eilę 720 skirtingų būdų.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>2. Mokykloje yra 10 skirtingų sporto būrelių. Mokinys gali pasirinkti 3 būrelius.
+                    <br>
+                    a) Kiek skirtingų būrelių rinkinių jis gali pasirinkti, jei jam nerūpi pasirinkimo tvarka?
+                    <br>
+                    b) Kiek skirtingų būrelių rinkinių jis gali pasirinkti, jei pirmas pasirinktas būrelis yra jam svarbiausias, antras – mažiau svarbus, o trečias – mažiausiai svarbus?
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p>
+                        Čia $n=10$ (bendras būrelių skaičius), o $k=3$ (pasirenkamų būrelių skaičius).
+                        <br>
+                        <br>
+                        a) Nerūpi pasirinkimo tvarka: tai yra derinys.
+                        $$C_{10}^3 = \binom{10}{3} = \frac{10!}{3!(10-3)!} = \frac{10!}{3!7!} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = 10 \cdot 3 \cdot 4 = 120.$$
+                        b) Tvarka yra svarbi: tai yra gretinys.
+                        $$A_{10}^3 = \frac{10!}{(10-3)!} = \frac{10!}{7!} = 10 \cdot 9 \cdot 8 = 720.$$
+                        a) 120 skirtingų būrelių rinkinių.
+                        <br>
+                        b) 720 skirtingų būrelių rinkinių.
+                    </p>
+                </details>
+            </div>
+            <div class="example-box">
+                <p><b>3. Iš 7 vyrų ir 5 moterų reikia sudaryti 4 asmenų komandą. Kiek skirtingų komandų galima sudaryti, jei komandoje turi būti bent 2 moterys?
+                </b></p>
+                <details><summary><b>Sprendimas</b></summary>
+                    <p> 
+                        Bendras žmonių skaičius $N = 7+5 = 12$. Komandą sudaro $K=4$ asmenys.
+                        <br>
+                        Komandoje turi būti bent 2 moterys. Tai reiškia, kad moterų skaičius gali būti 2, 3 arba 4.
+                        <br>
+                        Suskirstykime į atvejus ir pritaikykime derinių formulę (nes komandoje asmenų tvarka nesvarbi).
+                        <br>
+                        <br>
+                        1 atvejis: 2 moterys ir 2 vyrai
+                        <br>
+                        Pasirenkame 2 moteris iš 5: $C_5^2 = \frac{5!}{2!3!} = \frac{5 \cdot 4}{2 \cdot 1} = 10$ būdų.
+                        <br>
+                        Pasirenkame 2 vyrus iš 7: $C_7^2 = \frac{7!}{2!5!} = \frac{7 \cdot 6}{2 \cdot 1} = 21$ būdas.
+                        <br>
+                        Bendras šio atvejo komandų skaičius (pagal daugybos taisyklę): $10 \cdot 21 = 210$.
+                        <br>
+                        <br>
+                        2 atvejis: 3 moterys ir 1 vyras
+                        <br>
+                        Pasirenkame 3 moteris iš 5: $C_5^3 = \frac{5!}{3!2!} = \frac{5 \cdot 4}{2 \cdot 1} = 10$ būdų.
+                        <br>
+                        Pasirenkame 1 vyrą iš 7: $C_7^1 = \frac{7!}{1!6!} = 7$ būdai.
+                        <br>
+                        Bendras šio atvejo komandų skaičius: $10 \cdot 7 = 70$.
+                        <br>
+                        <br>
+                        3 atvejis: 4 moterys ir 0 vyrų
+                        <br>
+                        Pasirenkame 4 moteris iš 5: $C_5^4 = \frac{5!}{4!1!} = 5$ būdų.
+                        <br>
+                        Pasirenkame 0 vyrų iš 7: $C_7^0 = 1$ būdas.
+                        <br>
+                        Bendras šio atvejo komandų skaičius: $5 \cdot 1 = 5$.
+                        <br>
+                        <br>
+                        Bendras visų galimų komandų skaičius (pagal sudėties taisyklę):
+                        <br>
+                        $210 + 70 + 5 = 285$.
+                        <br>
+                        <br>
+                        Galima sudaryti 285 skirtingas komandas.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h1>Dirichlė principas</h1>
+                <h2 id="nelygybes-teorija">Dirichlė principas - teorija</h2>
+            <h4>Kas yra Dirichlė principas?</h4>
+        <p>
+            Dirichlė principas (dar žinomas kaip balandžių narvelio principas, angl. Pigeonhole Principle) yra paprastas, bet nepaprastai dažnai naudojamas įrankis kombinatorikos įrodymams. Jis teigia:
+            <br>
+            <br>
+            Jei $n$ daiktų yra paskirstyti į $m$ dėžučių (arba balandžiai į narvelius), ir $n > m$, tai bent vienoje dėžutėje (narvelyje) bus daugiau nei vienas daiktas.
+            Kitaip tariant, jei turite daugiau balandžių nei narvelių, bent viename narvelyje turės būti du ar daugiau balandžių.
+            <br>
+            <br>
+            Apibendrinta formuluotė:
+            <br>
+            Jei $n$ daiktų yra paskirstyti į $m$ dėžučių, tai bent vienoje dėžutėje bus bent $\lceil n/m \rceil$ daiktų (čia $\lceil x \rceil$ reiškia mažiausią sveikąjį skaičių, ne mažesnį už $x$).
+            <br>
+            <br>
+            Strategija sprendžiant uždavinius su Dirichlė principu:
+            <br>
+            Svarbiausia – teisingai atpažinti, kas yra "daiktai" (balandžiai) ir kas yra "dėžutės" (narveliai). Uždaviniuose dažnai reikia patiems juos apibrėžti arba sukurti.
+        </p>
+
+        <h4>Daugiau apie Dirichlė principą</h4>
+        <p>
+            Dirichlė principas dažnai pritaikomas uždaviniuose, daugiau apie jį pasiskaityti galie čia:
+            <br>
+            <a href="http://web.vu.lt/mif/v.stakenas/a+o/2003-2/2003-2-6-11.pdf" target="_blank">Plačiau apie Dirichlė principą</a>
+        </p>
+            </section>
+            <section class="content-box">
+                <h2 id="nelygybiu-uzdaviniai">Dirichlė principas - uždaviniai</h2>
+                <div class="example-box">
+                    <p><b>1. Mokykloje yra 366 mokiniai. Įrodykite, kad bent du mokiniai turi gimtadienį tą pačią dieną. (Neįskaitant keliamųjų metų, t.y., metuose yra 365 dienos).
+                    </b></p>
+                    <details><summary><b>Sprendimas</b></summary>
+                        <p>
+                            Daiktai (balandžiai): 366 mokiniai.
+                            <br>
+                            Dėžutės (narveliai): 365 metų dienos (galimos gimtadienių datos).
+                            <br>
+                            <br>
+                            Kadangi $n=366$ (mokinių skaičius) ir $m=365$ (dienų skaičius), ir $n > m$, pagal Dirichlė principą bent vienoje "dėžutėje" (gimtadienio dieną) bus daugiau nei vienas "daiktas" (mokinys). Vadinasi, bent du mokiniai turi gimtadienį tą pačią dieną.
+                            <br>
+                            Įrodyta.
+                        </p>
+                    </details>
+                </div>
+                <div class="example-box">
+                    <p><b>2. Kokį mažiausią skaičių kojinių reikia ištraukti iš stalčiaus tamsoje, kad tikrai turėtumėte porą tų pačių spalvų kojinių, jei stalčiuje yra 10 mėlynų ir 8 juodos kojinės?
+                    </b></p>
+                    <details><summary><b>Sprendimas</b></summary>
+                        <p>
+                            Jei ištrauksime 2 kojines:
+                            <br>
+                            <br>
+                            1. gali būti mėlyna ir mėlyna (porą turime)
+                            <br>
+                            2. gali būti juoda ir juoda (porą turime)
+                            <br>
+                            3. gali būti mėlyna ir juoda (poros neturime)
+                            <br>
+                            <br>
+                            Pagal Dirichlė principą, kad tikrai turėtume porą, mums reikia, kad kojinių skaičius būtų didesnis už dėžučių skaičių plius 1.
+                            <br>
+                            <br>
+                            Jei ištrauksime po vieną kojinę iš kiekvienos spalvos "dėžutės", t.y., 1 mėlyną ir 1 juodą, turėsime 2 kojines ir neturėsime poros.
+                            <br>
+                            <br>
+                            Kai ištrauksime trečią kojinę, ji būtinai bus arba mėlyna, arba juoda, todėl sudarys porą su viena iš jau turimų kojinių.
+                            <br>
+                            <br>
+                            Mažiausias skaičius $n=m+1=2+1=3$.
+                            <br>
+                            <br>
+                            Reikia ištraukti 3 kojines.
+
+                        </p>
+                    </details>
+                </div>
+                <div class="example-box">
+                    <p><b>3. Duoti 5 taškai plokštumoje, kurių koordinatės yra sveikieji skaičiai. Įrodykite, kad egzistuoja bent viena atkarpa, jungianti du iš šių taškų, kurios vidurio taško koordinatės yra sveikieji skaičiai.
+                    </b></p>
+                    <details><summary><b>Sprendimas</b></summary>
+                        <p> 
+                            Atkarpos, jungiančios taškus ($x_1$, $y_1$) ir ($x_2$, $y_2$), vidurio taško koordinatės yra ($\frac{x_1 + x_2}{2}$, $\frac{y_1 + y_2}{2}$). Kad vidurio taško koordinatės būtų sveikieji skaičiai, $x_1 + x_2$ ir $y_1 + y_2$ turi būti lyginiai skaičiai. Tai įvyksta, jei $x_1$ ir $x_2$ yra to pačio lyginumo (abu lyginiai arba abu nelyginiai) ir $y_1$ ir $y_2$ yra to pačio lyginumo.
+                            <br>
+                            <br>
+                            Taško ($x$,$y$) koordinatės gali turėti 4 lyginumo derinius:
+                            <br>
+                            1. (lyginis, lyginis)
+                            <br>
+                            2. (lyginis, nelyginis)
+                            <br>
+                            3. (nelyginis, lyginis)
+                            <br>
+                            4. (nelyginis, nelyginis)
+                            <br>
+                            <br>
+                            Dėžutės (narveliai): šie 4 galimi koordinačių lyginumo deriniai. Taigi, $m=4$ dėžutės.
+                            <br>
+                            Daiktai (balandžiai): duoti 5 taškai. Taigi, $n=5$ daiktai.
+                            <br>
+                            <br>
+                            Kadangi $n=5>m=4$, tai pagal Dirichlė principą bent du taškai pateks į tą pačią lyginumo derinio dėžutę. Tai reiškia, kad atsiras bent du taškai ($x_1$, $y_1$) ir ($x_2$, $y_2$), kurių $x$ koordinatės turi tą patį lyginumą ir $y$ koordinatės turi tą patį lyginumą.
+                            <br>
+                            <br>
+                            Jei $x_1$ ir $x_2$ yra to paties lyginumo, tai $x_1 + x_2$ yra lyginis.
+                            <br>
+                            Jei $y_1$ ir $y_2$ yra to paties lyginumo, tai $y_1 + y_2$ yra lyginis.
+                            <br>
+                            <br>
+                            Vadinasi, $\frac{x_1 + x_2}{2}$ ir $\frac{y_1 + y_2}{2}$ bus sveikieji skaičiai. Todėl šių dviejų taškų vidurio taško koordinatės bus sveikieji skaičiai.
+                            <br>
+                            <br>
+                            Įrodyta.
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+            <section class="content-box">
+                <h1>Matematiniai žaidimai</h1>
+                    <h2 id="matzaid-teorija">Matematiniai žaidimai - teorija</h2>
+                <h4>Kas yra matematiniai žaidimai?</h4>
+            <p>
+                Matematiniai žaidimai yra ypatinga kombinatorikos sritis, nagrinėjanti žaidimus su griežtomis taisyklėmis, kur atsitiktinumas nedaro įtakos rezultatui, o žaidėjų ėjimai yra žinomi. Šiuose žaidimuose, kaip ir šachmatuose ar šaškėse, svarbiausia yra strategija, logiškas mąstymas ir gebėjimas nustatyti laiminčias bei pralaiminčias pozicijas. Olimpiadinėje matematikoje matematiniai žaidimai dažnai pasirodo kaip loginiai uždaviniai, reikalaujantys mąstyti keliais ėjimais į priekį ir atrasti bendrus laiminčios strategijos principus.
+                <br>
+                <br>
+                Pagrindinis matematinio žaidimo tikslas yra rasti laiminčiąją strategiją – tai yra taisyklių rinkinys, leidžiantis vienam iš žaidėjų (nepriklausomai nuo kito žaidėjo ėjimų) pasiekti laiminčią poziciją. Laiminčiosios strategijos dažnai grindžiamos žaidimo pozicijų klasifikavimu į laiminčias pozicijas (pozicijas, iš kurių pirmasis žaidėjas pralaimi, jei antrasis žaidėjas žaidžia tobulai, t.y. laiminčios antrajam žaidėjui) ir pralaiminčias pozicijas (pozicijas, iš kurių pirmasis žaidėjas laimi, jei žaidžia tobulai, t.y. laiminčios pirmajam žaidėjui).
+                </p>
+    
+            <h4>Daugiau apie matematinius žaidimus</h4>
+            <p>
+                Matematiniai žaidimai yra dažni olimpiadinėje kombinatorikoje, daugiau apie juos (žaidimą NIM ir t.t.) rasite matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose:
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie matematinius žaidimus (skyrelis "Matematiniai žaidimai" - 92 psl.)</a>
+            </p>
+                </section>
+                <section class="content-box">
+                    <h2 id="matzaid-uzdaviniai">Matematiniai žaidimai - uždaviniai</h2>
+                    <div class="example-box">
+                        <p><b>1. Ant stalo yra 10 degtukų. Du žaidėjai pakaitomis ima 1 arba 2 degtukus. Laimi tas, kuris paima paskutinius degtukus. Koks žaidėjas (pirmasis ar antrasis) turi laiminčią strategiją? Žaidimą pradeda pirmasis žaidėjas.
+                        </b></p>
+                        <details><summary><b>Sprendimas</b></summary>
+                            <p>
+                                Analizuokime žaidimą nuo pabaigos.
+                                <br>
+                                <br>
+                                Jei liko 1 arba 2 degtukai: žaidėjas, kurio eilė, paima visus ir laimi. Tai laiminčioji pozicija.
+                                <br>
+                                <br>
+                                Jei liko 3 degtukai: kad ir kiek paimtų (1 ar 2), liks 2 arba 1 degtukas. Iš tų pozicijų kitas žaidėjas paims viską ir laimės. Vadinasi, 3 degtukai yra pralaiminčioji pozicija.
+                                <br>
+                                <br>
+                                Jei liko 4 degtukai: žaidėjas gali paimti 1 degtuką ir palikti 3. 3 yra pralaiminčioji pozicija, tad šis žaidėjas laimi. Vadinasi, 4 degtukai yra laiminčioji pozicija.
+                                <br>
+                                <br>
+                                Jei liko 5 degtukai: žaidėjas gali paimti 2 degtukus ir palikti 3. 3 yra pralaiminčioji pozicija, tad šis žaidėjas laimi. Vadinasi, 5 degtukai yra laiminčioji pozicija.
+                                <br>
+                                <br>
+                                Jei liko 6 degtukai: žaidėjas gali paimti 3 degtukus ir palikti 3. Bet jis negali paimti 3, nes paima tik 1 arba 2.
+                                <br>
+                                Jei paima 1, lieka 5 (laiminčioji pozicija).
+                                <br>
+                                Jei paima 2, lieka 4 (laiminčioji pozicija).
+                                <br>
+                                Vadinasi, 6 degtukai yra pralaiminčioji pozicija, nes kad ir ką darytum, visada palieki laiminčiąją poziciją.
+                                <br>
+                                <br>
+                                O nuo čia telieka įrodyti, kad pirmasis žaidėjas visada gali priversti antrąjį pradėti ėjimą su 6 degtukais (pralaiminčioje pozicijoje), o tada jau įrodėme, kad pirmasis žaidėjas laimės.
+                                <br>
+                                <br>
+                                O tai padaryti yra paprasta: pirmasis žaidėjas turi paimti 1 degtuką, palikdamas 9. Tada antrasis žaidėjas turės paimti 1 arba 2, palikdamas 8 arba 7. Iš abiejų šių pozicijų pirmasis žaidėjas gali palikti 6 (paimdamas 2 arba 1 atitinkamai). Vadinasi, kad pirmasis žaidėjas gali visada laimėti, jeigu jis pirmas darys ėjimą.
+                                <br>
+                                <br>
+                                Pirmasis žaidėjas turi laiminčią strategiją.
+                            </p>
+                        </details>
+                    </div>
+                    <div class="example-box">
+                        <p><b>2. Ant stalo yra 20 degtukų. Du žaidėjai pakaitomis paima degtukus. Vienu ėjimu žaidėjas gali paimti 1, 2 arba 3 degtukus. Laimi tas, kuris paima paskutinį degtuką. Kas laimi, jei abu žaidžia tobulai?
+                        </b></p>
+                        <details><summary><b>Sprendimas</b></summary>
+                            <p>
+                                Čia ir vėl galėtume analizuoti žaidimą nuo pabaigos, nustatydami P (pralaiminčias) ir L (laiminčias) pozicijas, tačiau galime tai padaryti greičiau.
+                                <br>
+                                <br>
+                                Mes žinome, kad ir kokį skaičių degtukų paims pirmasis žaidėjas, antrasis galės paimti tiek, kad bendra per jų abiejų ėjimą paimtų degtukų suma būtų lygi 4. Jei pirmasis žaidėjas paima 1, tada antrasis 3, jei pirmasis 2, tada ir antrasis 2, o jei pirmasis 3, tada antrasis 1.
+                                <br>
+                                <br>
+                                Vadinasi, kad per vieną bendrą ėjimą (vadinasi kai abu žaidėjai padaro po vieną ėjimą atskirai) nuo stalo visada galima paimti 4 degtukus, o iš viso yra 20 degtukų, vadinasi galime padaryti 5 tokius ėjimus, kai nuimame po 4 degtukus nuo stalo, ir tada antrasis žaidėjas per savo 5-ą ėjimą paims paskutinį degtuką nuo stalo.
+                                <br>
+                                <br>
+                                Antrasis žaidėjas turi laiminčią strategiją.
+                            </p>
+                        </details>
+                    </div>
+                    <div class="example-box">
+                        <p><b>3. Ant stalo yra $N$ monetų. Du žaidėjai pakaitomis paima monetas. Vienu ėjimu žaidėjas gali paimti 1, 2 arba 4 monetas. Laimi tas, kuris paima paskutinę monetą. Kokia laiminčioji strategija, jei $N=25$?
+                        </b></p>
+                        <details><summary><b>Sprendimas</b></summary>
+                            <p> 
+                                Tai yra "Atėmimo žaidimas", kurio strategija nustatoma identifikuojant laiminčias (L) ir pralaiminčias (P) pozicijas, dirbant atbuline eiga nuo 0 monetų.
+                                <br>
+                                <br>
+                                P-pozicija: Žaidėjas, kurio eilė, pralaimi, jei priešininkas žaidžia tobulai. Iš šios pozicijos bet koks galimas ėjimas veda į N-poziciją.
+                                <br>
+                                <br>
+                                L-pozicija: Žaidėjas, kurio eilė, laimi, jei žaidžia tobulai. Iš šios pozicijos egzistuoja bent vienas ėjimas, kuris veda į L-poziciją.
+                                <br>
+                                <br>
+                                Galimi ėjimai: paimti 1, 2 arba 4 monetas.
+                                <br>
+                                <br>
+                                Nustatysime L ir P pozicijas iki 25 monetų:
+                                <br>
+                                <br>
+                                0 monetų: P-pozicija (nėra ėjimų, todėl pralaimi tas, kurio eilė).
+                                <br>
+                                1 moneta: L-pozicija (galima paimti 1 monetą, lieka 0 (P)).
+                                <br>
+                                2 monetos: L-pozicija (galima paimti 2 monetas, lieka 0 (P)).
+                                <br>
+                                3 monetos: P-pozicija (jei paimi 1, lieka 2 (L); jei paimi 2, lieka 1 (L)).
+                                <br>
+                                4 monetos: L-pozicija (galima paimti 4 monetas, lieka 0 (P)).
+                                <br>
+                                5 monetos: L-pozicija (galima paimti 2 monetas, lieka 3 (P)).
+                                <br>
+                                6 monetos: P-pozicija (jei paimi 1, lieka 5 (L); jei paimi 2, lieka 4 (L); jei paimi 4, lieka 2 (L)).
+                                <br>
+                                7 monetos: L-pozicija (galima paimti 1 monetą, lieka 6 (P)).
+                                <br>
+                                8 monetos: L-pozicija (galima paimti 2 monetas, lieka 6 (P)).
+                                <br>
+                                9 monetos: P-pozicija (jei paimi 1, lieka 8 (L); jei paimi 2, lieka 7 (L); jei paimi 4, lieka 5 (L)).
+                                <br>
+                                10 monetų: L-pozicija (galima paimti 1 monetą, lieka 9 (P)).
+                                <br>
+                                11 monetų: L-pozicija (galima paimti 2 monetas, lieka 9 (P)).
+                                <br>
+                                12 monetų: P-pozicija (jei paimi 1, lieka 11 (L); jei paimi 2, lieka 10 (L); jei paimi 4, lieka 8 (L)).
+                                <br>
+                                13 monetų: L-pozicija (galima paimti 1 monetą, lieka 12 (P)).
+                                <br>
+                                14 monetų: L-pozicija (galima paimti 2 monetas, lieka 12 (P)).
+                                <br>
+                                15 monetų: P-pozicija (jei paimi 1, lieka 14 (L); jei paimi 2, lieka 13 (L); jei paimi 4, lieka 11 (L)).
+                                <br>
+                                16 monetų: L-pozicija (galima paimti 1 monetą, lieka 15 (P)).
+                                <br>
+                                17 monetų: L-pozicija (galima paimti 2 monetas, lieka 15 (P)).
+                                <br>
+                                18 monetų: P-pozicija (jei paimi 1, lieka 17 (L); jei paimi 2, lieka 16 (L); jei paimi 4, lieka 14 (L)).
+                                <br>
+                                19 monetų: L-pozicija (galima paimti 1 monetą, lieka 18 (P)).
+                                <br>
+                                20 monetų: L-pozicija (galima paimti 2 monetas, lieka 18 (P)).
+                                <br>
+                                21 moneta: P-pozicija (jei paimi 1, lieka 20 (L); jei paimi 2, lieka 19 (L); jei paimi 4, lieka 17 (L)).
+                                <br>
+                                22 monetos: L-pozicija (galima paimti 1 monetą, lieka 21 (P)).
+                                <br>
+                                23 monetos: L-pozicija (galima paimti 2 monetas, lieka 21 (P)).
+                                <br>
+                                24 monetos: P-pozicija (jei paimi 1, lieka 23 (L); jei paimi 2, lieka 22 (L); jei paimi 4, lieka 20 (L)).
+                                <br>
+                                25 monetos: L-pozicija (galima paimti 1 monetą, lieka 24 (P)).
+                                <br>
+                                <br>
+                                Pradžioje monetų yra $N=25$. Kadangi 25 yra L-pozicija (žr. sąrašą), pirmasis žaidėjas turi laiminčią strategiją.
+                                <br>
+                                <br>
+                                Laiminčioji strategija pirmajam žaidėjui:
+                                <br>
+                                Pirmasis žaidėjas, esantis L-pozicijoje, turi padaryti ėjimą, kuris palieka oponentą P-pozicijoje.
+                                <br>
+                                Iš $N=25$, artimiausia ir pasiekiama P-pozicija yra 24.
+                                <br>
+                                Kad paliktų 24 monetas, pirmasis žaidėjas turi paimti $25−24=1$ monetą.
+                                <br>
+                                <br>
+                                Po to, kai pirmasis žaidėjas paima 1 monetą, lieka 24 monetos (P-pozicija). Antrasis žaidėjas, kad ir kiek paimtų (1, 2 ar 4), paliks L-poziciją (23, 22 ar 20 atitinkamai). Iš L-pozicijos pirmasis žaidėjas vėlgi visada gali padaryti ėjimą, kad paliktų P-poziciją, ir taip toliau, kol galiausiai paims paskutines monetas.
+                                <br>
+                                <br>
+                                Pirmasis žaidėjas turi laiminčią strategiją.
+                            </p>
+                        </details>
+                    </div>
+                    <div class="example-box">
+                        <p><b>Daugiau uždavinių ir teorijos galite rasti matematikos knygoje, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose: </b>
+                            <br>
+                            <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf" target="_blank">Plačiau apie matematinius žaidimus (skyrelis "Matematiniai žaidimai" - 92 psl.)</a>
+                    </div>
+                </section>
+
+        <section class="content-box">
+            <h2>Apibendrinimas</h2>
+            <p>
+                <center>Praėję šį skyrių, jūs įgavote pagrindus ir esate pasiruošę toliau gilintis bei spręsti olimpiadinės kombinatorikos uždavinius. Sėkmės!</center>
+            </p>
+        </section>
+        <section class="content-box">
+            <h2 id="papildomi-istekliai">Papildomi ištekliai</h2>
+            <ul>
+                <li>Lietuviškas Youtube kanalas, kuriame yra daug olimpiadinės matematikos uždavinių su sprendimais:
+                <br>
+                <a href="https://www.youtube.com/@Kofka505maths/videos">Kofka505</a></li>
+                <br>
+                <br>
+                <li>Matematikos knyga, kurią parašė 5 Lietuvos matematikai, ne kartą atstovavę Lietuvą tarptautinėse olimpiadose (joje aprašomos visos 4 olimpiadinės matematikos sritys):
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/wp-content/uploads/2015/10/matknyga.pdf">Matematikos knyga</a></li>
+                <br>
+                <br>
+                <li>Praeitų metų Lietuvos mokinių matematikos olimpiados (LMMO) užduotys:
+                <br>
+                <a href="https://www4352.vu.lt/matematikos-olimpiados/lmmo/">LMMO svetainė</a></li>
+            </ul>
+        </section>
+    </main>
+
+
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <script>
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            themeToggle.textContent = savedTheme === 'dark-mode' ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
+            themeToggle.textContent = isDarkMode ? '☀️ Šviesus režimas' : '🌙 Tamsus režimas';
+        });
+    </script>
+</body>
+</html>
