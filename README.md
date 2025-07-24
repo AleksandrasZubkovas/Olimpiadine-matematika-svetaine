@@ -29,7 +29,7 @@ This insight sparked a mission: to create a free, user-friendly, and culturally 
 
 ## How to Use
 
-The **Olympiad Math Hub** is a static website, making it incredibly easy to access and navigate. Simply open the `index.html` file in your web browser or follow this link: .
+The **Olympiad Math Hub** is a static website, making it incredibly easy to access and navigate. Simply open the `index.html` file in your web browser or follow this link: https://aleksandraszubkovas.github.io/Olympiad-Math-Website/.
 
 * **Explore Theory:** Navigate through the dedicated sections to learn new concepts.
 * **Practice Problems:** Test your understanding with categorized problems.
